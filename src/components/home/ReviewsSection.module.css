@@ -1,0 +1,103 @@
+.reviewsSection {
+  padding: 5.5rem 0;
+  background-color: #ffffff;
+}
+
+.reviewsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.75rem;
+}
+
+.reviewCard {
+  background: var(--color-light-bg);
+  border: 1px solid var(--color-light-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.reviewCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-md);
+  background: #ffffff;
+}
+
+.starRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-accent);
+  margin-bottom: 1.25rem;
+}
+
+.quoteText {
+  font-size: 0.95rem;
+  color: var(--color-text-main);
+  line-height: 1.6;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.reviewerMeta {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--color-light-border-soft);
+  padding-top: 1rem;
+}
+
+.authorName {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.courseTag {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-accent-hover);
+  margin-top: 0.2rem;
+}
+
+.locationTag {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-top: 0.2rem;
+}
+
+.reviewsFooter {
+  text-align: center;
+  margin-top: 3.5rem;
+}
+
+.viewAllReviewsLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-primary);
+  font-weight: 800;
+  font-size: 0.98rem;
+  text-decoration: underline;
+  transition: color var(--transition-fast);
+}
+
+.viewAllReviewsLink:hover {
+  color: var(--color-accent-hover);
+}
+
+@media (max-width: 1024px) {
+  .reviewsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .reviewsGrid {
+    grid-template-columns: 1fr;
+  }
+}

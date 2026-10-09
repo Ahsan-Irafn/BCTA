@@ -1,0 +1,202 @@
+.heroContainer {
+  position: relative;
+  min-height: 86vh;
+  display: flex;
+  align-items: center;
+  background-color: #07111f;
+  color: #ffffff;
+  overflow: hidden;
+  padding: clamp(3.5rem, 8vh, 6rem) 0;
+  isolation: isolate;
+}
+
+/* Background Media & Gradients */
+.videoBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  opacity: 0.38;
+  filter: saturate(1.2) contrast(1.1);
+  transition: opacity 0.4s ease;
+}
+
+.posterImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -3;
+  opacity: 0.3;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 75% 25%, rgba(22, 48, 88, 0.6) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(7, 17, 31, 0.75) 0%, rgba(7, 17, 31, 0.92) 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Subtle Blueprint Grid Motif */
+.blueprintGrid {
+  position: absolute;
+  inset: 0;
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Hero Content Grid */
+.heroContent {
+  position: relative;
+  z-index: 10;
+  max-width: 900px;
+}
+
+.badgeRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: rgba(255, 182, 5, 0.12);
+  border: 1px solid rgba(255, 182, 5, 0.35);
+  color: var(--color-accent);
+  padding: 0.45rem 1.15rem;
+  border-radius: var(--radius-full);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(8px);
+}
+
+.heroHeadline {
+  font-size: clamp(2.3rem, 5.2vw, 4rem);
+  font-weight: 800;
+  line-height: 1.12;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.highlightText {
+  color: var(--color-accent);
+  display: inline-block;
+}
+
+.heroSubhead {
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  color: #cad5e2;
+  line-height: 1.65;
+  margin-bottom: 2.5rem;
+  max-width: 720px;
+}
+
+.actionRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.primaryCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: var(--color-accent);
+  color: #163058;
+  font-size: 1.05rem;
+  font-weight: 800;
+  padding: 0.95rem 2.2rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(255, 182, 5, 0.35);
+  transition: all var(--transition-fast);
+}
+
+.primaryCta:hover {
+  background: var(--color-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 182, 5, 0.45);
+}
+
+.secondaryCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 0.95rem 1.8rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all var(--transition-fast);
+}
+
+.secondaryCta:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* Video Control Button */
+.videoToggleBtn {
+  position: absolute;
+  right: clamp(1rem, 4vw, 2rem);
+  bottom: clamp(1.5rem, 4vh, 2.5rem);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(11, 25, 43, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e2e8f0;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  z-index: 20;
+}
+
+.videoToggleBtn:hover {
+  background: rgba(22, 48, 88, 0.9);
+  color: #ffffff;
+  border-color: var(--color-accent);
+}
+
+@media (max-width: 768px) {
+  .heroContainer {
+    min-height: auto;
+    padding: 3rem 0;
+  }
+
+  .actionRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .primaryCta, .secondaryCta {
+    justify-content: center;
+  }
+
+  .videoToggleBtn {
+    position: static;
+    margin-top: 1.5rem;
+  }
+}
