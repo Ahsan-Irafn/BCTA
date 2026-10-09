@@ -1,0 +1,277 @@
+/* ==========================================================================
+   BCTA Preserved Footer Styles
+   Faithfully matching live bcta.edu.au footer design, hierarchy & colors
+   ========================================================================== */
+
+.siteFooter {
+  width: 100%;
+  margin-top: auto;
+  font-family: "Red Hat Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Section 1: Main 4-Column Grid */
+.footerMain {
+  background-color: #163058;
+  color: #ffffff;
+  padding: 48px 0 40px 0;
+}
+
+.footerGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 1.4fr 1fr 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+/* Column 1: Logo & RTO */
+.colLogo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footerLogo {
+  width: 160px;
+  height: auto;
+  object-fit: contain;
+}
+
+.rtoText {
+  color: #d7dbde;
+  font-size: 15px;
+  margin: 0;
+}
+
+.rtoText strong {
+  color: #ffffff;
+}
+
+.socialRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.socialLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transition: all var(--transition-fast);
+}
+
+.socialLink:hover {
+  background: var(--color-accent);
+  color: #163058;
+  transform: translateY(-2px);
+}
+
+/* Column 2: Reconciliation & Flags */
+.colAcknowledgement {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.flagRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.flagImg {
+  height: 36px;
+  width: auto;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.acknowledgementText {
+  color: #d7dbde;
+  font-size: 13.5px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Column 3 & 4 Headings & Lists */
+.colHeading {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  letter-spacing: 0.5px;
+}
+
+.footerLinkList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footerLinkList li {
+  font-size: 14.5px;
+  color: #d7dbde;
+}
+
+.footerLinkList a {
+  color: #d7dbde;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footerLinkList a:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.disabledLink {
+  color: #9ba7b5;
+  cursor: default;
+}
+
+/* Column 4: Contact & Buttons */
+.colContact {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footerButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.btnApply {
+  display: inline-block;
+  background-color: var(--color-accent);
+  color: #163058;
+  font-weight: 800;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 10px 18px;
+  border-radius: 3px;
+  text-align: center;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.btnApply:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-2px);
+}
+
+.btnLogin {
+  display: inline-block;
+  background-color: #0b1e38;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 10px 18px;
+  border-radius: 3px;
+  text-align: center;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.btnLogin:hover {
+  background-color: #122846;
+  border-color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* Section 2: Contact Strip / Topbar */
+.contactStrip {
+  background-color: #17365f;
+  color: #ffffff;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 14px;
+}
+
+.contactStripInner {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.contactItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.contactItem:hover {
+  opacity: 0.85;
+  color: var(--color-accent);
+}
+
+.contactIcon {
+  flex-shrink: 0;
+  color: #ffffff;
+}
+
+/* Section 3: Copyright Bar */
+.copyrightBar {
+  background-color: #171F32;
+  color: #ffffff;
+  padding: 14px 0;
+  text-align: center;
+  font-size: 14px;
+}
+
+.copyrightText {
+  color: #d7dbde;
+  font-size: 13.5px;
+  margin: 0;
+}
+
+/* Responsive Footer Breakpoints */
+@media (max-width: 1024px) {
+  .footerGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .contactStripInner {
+    justify-content: center;
+    gap: 14px 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .footerGrid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .colLogo {
+    align-items: flex-start;
+  }
+
+  .contactStripInner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .contactItem {
+    white-space: normal;
+  }
+}

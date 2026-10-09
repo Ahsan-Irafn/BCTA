@@ -1,0 +1,293 @@
+.headerWrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Top Utility Bar */
+.topBar {
+  background: #163058;
+  color: #ffffff;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.45rem 0;
+}
+
+.topBarInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.topBarLeft, .topBarRight {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.topBarItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #e2e8f0;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.topBarItem:hover {
+  color: var(--color-accent);
+}
+
+.rtoBadge {
+  background: rgba(255, 182, 5, 0.18);
+  color: var(--color-accent);
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(255, 182, 5, 0.3);
+}
+
+.studentLoginLink {
+  color: var(--color-accent);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.studentLoginLink:hover {
+  text-decoration: underline;
+}
+
+/* Main Navigation Bar */
+.mainNav {
+  background: #ffffff;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-light-border-soft);
+}
+
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logoImage {
+  height: 54px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Desktop Menu */
+.desktopNavList {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  list-style: none;
+}
+
+.navItem {
+  position: relative;
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--color-primary);
+  font-size: 0.98rem;
+  font-weight: 700;
+  padding: 0.5rem 0;
+  transition: color var(--transition-fast);
+}
+
+.navLink:hover {
+  color: var(--color-accent-hover);
+}
+
+/* Dropdown Menu */
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 260px;
+  background: #ffffff;
+  border: 1px solid var(--color-light-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: 0.6rem 0;
+  list-style: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all var(--transition-normal);
+  z-index: 100;
+}
+
+.navItem:hover .dropdown,
+.navItem:focus-within .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdownItem a {
+  display: block;
+  padding: 0.65rem 1.25rem;
+  color: var(--color-text-main);
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+
+.dropdownItem a:hover {
+  background: var(--color-light-bg);
+  color: var(--color-primary);
+  padding-left: 1.5rem;
+}
+
+/* Header CTAs */
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.applyBtn {
+  background: var(--color-accent);
+  color: var(--color-primary-dark);
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.65rem 1.35rem;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.applyBtn:hover {
+  background: var(--color-accent-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Mobile Toggle */
+.mobileMenuToggle {
+  display: none;
+  padding: 0.5rem;
+  color: var(--color-primary);
+}
+
+/* Mobile Drawer */
+.mobileDrawer {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .topBar {
+    display: none;
+  }
+
+  .desktopNavList, .navActions {
+    display: none;
+  }
+
+  .mobileMenuToggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobileDrawer {
+    display: block;
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ffffff;
+    padding: 1.5rem;
+    overflow-y: auto;
+    border-top: 1px solid var(--color-light-border);
+    transform: translateX(100%);
+    transition: transform var(--transition-normal);
+    z-index: 999;
+  }
+
+  .mobileDrawerOpen {
+    transform: translateX(0);
+  }
+
+  .mobileNavList {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .mobileNavLink {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    display: block;
+  }
+
+  .mobileSubMenu {
+    list-style: none;
+    margin-top: 0.5rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--color-accent);
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .mobileSubMenu a {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .mobileDrawerActions {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .mobileApplyBtn {
+    background: var(--color-accent);
+    color: var(--color-primary-dark);
+    font-weight: 800;
+    text-align: center;
+    padding: 0.85rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .mobileStudentBtn {
+    background: var(--color-primary);
+    color: #ffffff;
+    font-weight: 700;
+    text-align: center;
+    padding: 0.85rem;
+    border-radius: var(--radius-sm);
+  }
+}
