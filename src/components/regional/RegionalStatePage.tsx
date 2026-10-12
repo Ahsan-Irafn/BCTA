@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { SITE_CONFIG } from '@/lib/constants';
 import EnquiryForm from '@/components/common/EnquiryForm';
+import BuildersSlider from '@/components/common/BuildersSlider';
 import styles from './RegionalStatePage.module.css';
 
 interface RegionalStatePageProps {
@@ -514,7 +515,10 @@ export default function RegionalStatePage({ stateKey }: RegionalStatePageProps) 
         </div>
       </section>
 
-      {/* 6. Regional Campus & Consultation Details */}
+      {/* 6. "Training our next Generation of Builders" Responsive Image Slider */}
+      <BuildersSlider />
+
+      {/* 7. Regional Campus & Consultation Details */}
       <section className={styles.stateDetailSection} aria-label="Campus and Enrolment Info">
         <div className="container">
           <div className={styles.stateGrid}>

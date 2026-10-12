@@ -1,6 +1,6 @@
-import React from 'react';
 import Image from 'next/image';
 import { MapPin } from 'lucide-react';
+import BuildersSlider from '@/components/common/BuildersSlider';
 import styles from './CampusExperience.module.css';
 
 interface SiteFeature {
@@ -37,7 +37,9 @@ const TRAINING_SITES: SiteFeature[] = [
 
 export default function CampusExperience() {
   return (
-    <section className={styles.experienceSection} aria-label="Learning Facilities and Practical Sites">
+    <>
+      <BuildersSlider />
+      <section className={styles.experienceSection} aria-label="Learning Facilities and Practical Sites">
       <div className="container">
         <div className="section-header">
           <span className="section-badge">Real Facilities</span>
@@ -82,5 +84,6 @@ export default function CampusExperience() {
         </div>
       </div>
     </section>
-  );
+  </>
+);
 }
