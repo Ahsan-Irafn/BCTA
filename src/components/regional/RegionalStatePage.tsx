@@ -21,6 +21,7 @@ import { SITE_CONFIG } from '@/lib/constants';
 import EnquiryForm from '@/components/common/EnquiryForm';
 import BuildersSlider from '@/components/common/BuildersSlider';
 import WhyChooseBcta from '@/components/home/WhyChooseBcta';
+import ReviewsSection from '@/components/home/ReviewsSection';
 import styles from './RegionalStatePage.module.css';
 
 interface RegionalStatePageProps {
@@ -522,7 +523,10 @@ export default function RegionalStatePage({ stateKey }: RegionalStatePageProps) 
       {/* 7. "Why study with BCTA" - 3D Interactive Blueprint Section */}
       <WhyChooseBcta />
 
-      {/* 8. Regional Campus & Consultation Details */}
+      {/* 8. "What Our Students Say About Us" - Cinematic Student-Story Gallery */}
+      <ReviewsSection />
+
+      {/* 9. Regional Campus & Consultation Details */}
       <section className={styles.stateDetailSection} aria-label="Campus and Enrolment Info">
         <div className="container">
           <div className={styles.stateGrid}>
