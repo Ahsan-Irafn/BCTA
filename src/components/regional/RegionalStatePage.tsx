@@ -18,11 +18,12 @@ import {
   Check,
 } from 'lucide-react';
 import { SITE_CONFIG } from '@/lib/constants';
-import EnquiryForm from '@/components/common/EnquiryForm';
 import BuildersSlider from '@/components/common/BuildersSlider';
 import WhyChooseBcta from '@/components/home/WhyChooseBcta';
 import ReviewsSection from '@/components/home/ReviewsSection';
 import TrustindexReviews from '@/components/home/TrustindexReviews';
+import CareerOutlookSection from '@/components/home/CareerOutlookSection';
+import RegisterNowSection from '@/components/home/RegisterNowSection';
 import styles from './RegionalStatePage.module.css';
 
 interface RegionalStatePageProps {
@@ -530,68 +531,15 @@ export default function RegionalStatePage({ stateKey }: RegionalStatePageProps) 
       {/* 9. "What Students Say About Us" - Verified Google / Trustindex Customer Reviews */}
       <TrustindexReviews />
 
-      {/* 10. Regional Campus & Consultation Details */}
-      <section className={styles.stateDetailSection} aria-label="Campus and Enrolment Info">
-        <div className="container">
-          <div className={styles.stateGrid}>
-            <div className={styles.stateInfoBox}>
-              <h3>Study Locally in {stateName}</h3>
-              <p>
-                BCTA offers accredited face-to-face workshops and virtual tutorial sessions tailored
-                for working trades across {stateName}. Training hubs are equipped with industry-grade
-                materials, estimating software, and dedicated trainers with decades of on-site building
-                experience.
-              </p>
+      {/* 10. "Career Opportunities and Estimated Income" - Animated Architectural Outlook */}
+      <CareerOutlookSection />
 
-              <ul className={styles.featureList}>
-                <li className={styles.featureListItem}>
-                  <Check size={18} aria-hidden="true" />
-                  <span>
-                    <strong>Training Facility:</strong> {stateAddress}
-                  </span>
-                </li>
-                <li className={styles.featureListItem}>
-                  <Check size={18} aria-hidden="true" />
-                  <span>
-                    <strong>Licensing Authority Alignment:</strong> Fully compliant curriculum matching{' '}
-                    {regulatorName} builder licensing evidence guidelines.
-                  </span>
-                </li>
-                <li className={styles.featureListItem}>
-                  <Check size={18} aria-hidden="true" />
-                  <span>
-                    <strong>Trade Recognition (RPL):</strong> Fast-track your qualification using prior
-                    on-site construction experience.
-                  </span>
-                </li>
-              </ul>
-
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                <a
-                  href={`tel:${SITE_CONFIG.phone.replace(/\s+/g, '')}`}
-                  className={styles.enquireBtn}
-                  style={{ display: 'inline-flex' }}
-                >
-                  <Phone size={16} aria-hidden="true" />
-                  <span>Speak to a {stateShort} Advisor</span>
-                </a>
-              </div>
-            </div>
-
-            <div className={styles.consultBox}>
-              <h3 className={styles.consultTitle}>Enrol in {stateName}</h3>
-              <p className={styles.consultSubtitle}>
-                Request course info packs, timetable options, or eligibility assessments for upcoming cohorts.
-              </p>
-              <EnquiryForm
-                initialState={stateShort}
-                title={`Fast-Track Your Enrolment in ${stateShort}`}
-                subtitle="Fill in your details below and a BCTA advisor will contact you within 1 business day."
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* 11. "Register Now" - Official Zoho WebToLeadForm Integration */}
+      <RegisterNowSection
+        stateName={stateName}
+        stateAddress={stateAddress}
+        leadSource={stateKey === 'wa' ? 'Western Aus Form' : 'South Aus form'}
+      />
 
       {/* 7. Regional Footer */}
       <footer className={styles.regionalFooter}>
