@@ -1,72 +1,557 @@
-.whyChooseSection {
-  padding: 5.5rem 0;
-  background-color: #ffffff;
+/* Why Choose BCTA - "Blueprint to Real-World Skills" Interactive 3D Section */
+
+.blueprintSection {
+  position: relative;
+  padding: 6.5rem 0;
+  background: radial-gradient(circle at 75% 20%, #11284d 0%, #0a162b 60%, #060e1d 100%);
+  color: #ffffff;
+  overflow: hidden;
+  border-top: 1px solid rgba(56, 189, 248, 0.15);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.15);
 }
 
-.featuresGrid {
+/* Blueprint Grid Background Pattern */
+.blueprintGridOverlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+    linear-gradient(to right, rgba(255, 182, 5, 0.03) 5px, transparent 5px),
+    linear-gradient(to bottom, rgba(255, 182, 5, 0.03) 5px, transparent 5px);
+  background-size: 40px 40px, 40px 40px, 200px 200px, 200px 200px;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+/* CAD Technical Markings & Measurements in corners */
+.blueprintGridOverlay::before {
+  content: 'ELEVATION: NORTH-EAST  •  SCALE 1:50  •  SPEC: ASQA / NCC 2026';
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: rgba(56, 189, 248, 0.4);
+  pointer-events: none;
+}
+
+.blueprintGridOverlay::after {
+  content: 'DATUM: +0.000 FFL  [STRUCTURAL GRID A1-D4]';
+  position: absolute;
+  bottom: 18px;
+  left: 24px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: rgba(56, 189, 248, 0.4);
+  pointer-events: none;
+}
+
+/* Main Layout Grid: Asymmetric 2 Columns on Desktop */
+.asymmetricGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.2rem;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 3.5rem;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
 }
 
-.featureCard {
-  background: var(--color-light-bg);
-  border: 1px solid var(--color-light-border);
-  border-radius: var(--radius-lg);
-  padding: 2.5rem 2rem;
+/* ========================================================
+   LEFT COLUMN: Intro, Heading, Description, Authentic Photo
+   ======================================================== */
+.leftColumn {
   display: flex;
   flex-direction: column;
-  transition: all var(--transition-normal);
+  gap: 1.75rem;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.featureCard:hover {
-  background: #ffffff;
-  border-color: var(--color-accent);
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-4px);
+.leftColumnVisible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.iconWrapper {
-  width: 54px;
-  height: 54px;
-  border-radius: var(--radius-md);
-  background: rgba(22, 48, 88, 0.08);
-  color: var(--color-primary);
-  display: flex;
+.introBadge {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-  transition: all var(--transition-fast);
+  gap: 0.5rem;
+  align-self: flex-start;
+  background: rgba(255, 182, 5, 0.1);
+  color: #ffb605;
+  border: 1px solid rgba(255, 182, 5, 0.35);
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-.featureCard:hover .iconWrapper {
-  background: var(--color-accent);
-  color: #163058;
-}
-
-.featureTitle {
-  font-size: 1.25rem;
+.sectionHeading {
+  font-size: clamp(2.2rem, 3.8vw, 3.1rem);
   font-weight: 800;
-  color: var(--color-primary);
-  margin-bottom: 0.75rem;
-  line-height: 1.3;
-}
-
-.featureDescription {
-  font-size: 0.95rem;
-  color: var(--color-text-muted);
-  line-height: 1.6;
+  color: #ffffff;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
   margin: 0;
 }
 
+.headingAccent {
+  color: #ffb605;
+  position: relative;
+  display: inline-block;
+}
+
+.headingAccent::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #ffb605 0%, rgba(255, 182, 5, 0) 100%);
+  border-radius: 2px;
+}
+
+.supportingText {
+  font-size: 1.05rem;
+  color: #94a3b8;
+  line-height: 1.65;
+  margin: 0;
+  max-width: 520px;
+}
+
+/* Authentic Image Frame with Architectural CAD Borders */
+.imageCardWrapper {
+  position: relative;
+  border-radius: 14px;
+  padding: 8px;
+  background: rgba(18, 38, 71, 0.7);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.5);
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+
+.imageFrame {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+}
+
+.authenticPhoto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.imageCardWrapper:hover .authenticPhoto {
+  transform: scale(1.04);
+}
+
+/* CAD Crosshairs & Floating Spec Overlay */
+.photoCadTag {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(10, 22, 43, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 182, 5, 0.4);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  color: #f1f5f9;
+}
+
+.photoCadTagDot {
+  width: 8px;
+  height: 8px;
+  background: #ffb605;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ffb605;
+}
+
+/* ========================================================
+   RIGHT COLUMN: Interactive 3D Perspective Architectural Slabs
+   ======================================================== */
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+}
+
+.rightColumnVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 3D Scene Viewport */
+.sceneContainer {
+  position: relative;
+  perspective: 1100px;
+  perspective-origin: 50% 35%;
+  width: 100%;
+  padding: 1.5rem 0 2rem 0;
+}
+
+/* Tiltable Assembly Track */
+.isometricAssembly {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  transform-style: preserve-3d;
+  transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Architectural Layer Slab Button */
+.layerSlab {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(22, 48, 88, 0.75) 0%, rgba(14, 31, 58, 0.85) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-left: 5px solid rgba(56, 189, 248, 0.5);
+  border-radius: 10px;
+  padding: 1rem 1.4rem;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transform: translateZ(0) rotateX(12deg) rotateY(-8deg);
+  transform-origin: left center;
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 0.3s ease,
+              background 0.3s ease,
+              box-shadow 0.35s ease;
+  box-shadow: 0 8px 18px -4px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.3);
+  outline: none;
+}
+
+/* Subtle staggered shift to emphasize offset stacking */
+.layerSlab:nth-child(1) { margin-left: 0%; }
+.layerSlab:nth-child(2) { margin-left: 3%; }
+.layerSlab:nth-child(3) { margin-left: 6%; }
+.layerSlab:nth-child(4) { margin-left: 9%; }
+
+.layerSlab:hover:not(.layerSlabActive) {
+  transform: translateZ(16px) translateY(-4px) rotateX(10deg) rotateY(-6deg);
+  border-color: rgba(255, 182, 5, 0.4);
+  background: linear-gradient(135deg, rgba(30, 62, 112, 0.85) 0%, rgba(18, 40, 75, 0.9) 100%);
+}
+
+/* Selected Active Layer: Lifted higher, glowing edge in BCTA Yellow */
+.layerSlabActive {
+  background: linear-gradient(135deg, rgba(26, 56, 102, 0.95) 0%, rgba(17, 36, 68, 0.98) 100%);
+  border-color: rgba(255, 182, 5, 0.6);
+  border-left: 6px solid #ffb605;
+  transform: translateZ(36px) translateY(-8px) rotateX(8deg) rotateY(-4deg);
+  box-shadow: 0 18px 30px -8px rgba(0, 0, 0, 0.6), 0 0 24px rgba(255, 182, 5, 0.22);
+}
+
+.layerSlab:focus-visible {
+  outline: 2px solid #ffb605;
+  outline-offset: 4px;
+}
+
+/* Layer Info Content */
+.slabHeader {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.slabCodeBadge {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  background: rgba(10, 22, 43, 0.9);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  letter-spacing: 0.05em;
+  transition: all 0.25s ease;
+}
+
+.layerSlabActive .slabCodeBadge {
+  color: #ffb605;
+  border-color: rgba(255, 182, 5, 0.5);
+  background: rgba(255, 182, 5, 0.12);
+}
+
+.slabTitles {
+  display: flex;
+  flex-direction: column;
+}
+
+.slabTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.3;
+  transition: color 0.25s ease;
+}
+
+.layerSlabActive .slabTitle {
+  color: #ffb605;
+}
+
+.slabSubtitle {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  line-height: 1.3;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.02em;
+}
+
+/* Right Edge CAD Icon Indicator */
+.slabRight {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.activeIndicatorDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transition: all 0.3s ease;
+}
+
+.layerSlabActive .activeIndicatorDot {
+  background: #ffb605;
+  box-shadow: 0 0 10px #ffb605;
+}
+
+.chevronIcon {
+  color: rgba(255, 255, 255, 0.4);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.layerSlabActive .chevronIcon {
+  color: #ffb605;
+  transform: translateX(4px);
+}
+
+/* ========================================================
+   READING AREA: Clear, Stable Area Below the Composition
+   ======================================================== */
+.readingArea {
+  position: relative;
+  background: rgba(14, 29, 54, 0.9);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 14px;
+  padding: 1.8rem 2rem;
+  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.4);
+  /* Stable fixed min-height to ensure ZERO layout shift on tab change */
+  min-height: 185px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.readingAreaHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 0.9rem;
+  margin-bottom: 1.3rem;
+}
+
+.readingAreaTitle {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #ffb605;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.readingAreaBlueprintMeta {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+  color: rgba(56, 189, 248, 0.6);
+  letter-spacing: 0.05em;
+}
+
+/* Two Benefits Columns in Reading Area */
+.benefitsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.benefitCard {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.benefitIconBox {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(255, 182, 5, 0.12);
+  border: 1px solid rgba(255, 182, 5, 0.3);
+  color: #ffb605;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.benefitCard:hover .benefitIconBox {
+  transform: translateY(-2px);
+  background: rgba(255, 182, 5, 0.22);
+}
+
+.benefitContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.benefitHeading {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.benefitParagraph {
+  font-size: 0.92rem;
+  color: #cbd5e1;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Accessible Fallback (Screen Readers & No-JS) */
+.srOnlyFallback {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ========================================================
+   RESPONSIVE DESIGN BREAKPOINTS
+   ======================================================== */
 @media (max-width: 1024px) {
-  .featuresGrid {
-    grid-template-columns: repeat(2, 1fr);
+  .asymmetricGrid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .leftColumn {
+    max-width: 700px;
+  }
+
+  .layerSlab:nth-child(1),
+  .layerSlab:nth-child(2),
+  .layerSlab:nth-child(3),
+  .layerSlab:nth-child(4) {
+    margin-left: 0;
+  }
+
+  .layerSlab {
+    transform: none;
+  }
+
+  .layerSlab:hover:not(.layerSlabActive) {
+    transform: translateY(-3px);
+  }
+
+  .layerSlabActive {
+    transform: translateY(-4px);
   }
 }
 
 @media (max-width: 640px) {
-  .featuresGrid {
+  .blueprintSection {
+    padding: 4.5rem 0;
+  }
+
+  .blueprintGridOverlay::before,
+  .blueprintGridOverlay::after {
+    display: none;
+  }
+
+  .sectionHeading {
+    font-size: 2rem;
+  }
+
+  .layerSlab {
+    padding: 0.9rem 1rem;
+    transform: none !important;
+  }
+
+  .slabCodeBadge {
+    display: none;
+  }
+
+  .slabTitle {
+    font-size: 0.98rem;
+  }
+
+  .readingArea {
+    padding: 1.25rem 1.25rem;
+    min-height: auto;
+  }
+
+  .benefitsRow {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+/* ========================================================
+   PREFERS-REDUCED-MOTION: Instant, Static, Accessible
+   ======================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .leftColumn,
+  .rightColumn {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .isometricAssembly,
+  .layerSlab,
+  .layerSlabActive,
+  .benefitsRow,
+  .authenticPhoto,
+  .benefitIconBox {
+    transform: none !important;
+    transition: none !important;
   }
 }
