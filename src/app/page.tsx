@@ -300,7 +300,7 @@ export default function StandaloneBctaPage() {
               <div className="bcta-watermark">V</div>
             </a>
 
-            <a className="bcta-card" href="https://bcta.edu.au/south-australia/">
+            <a className="bcta-card" href="/south-australia">
               <span className="bcta-card-light"></span>
 
               <div className="bcta-card-header">
@@ -324,7 +324,7 @@ export default function StandaloneBctaPage() {
               <div className="bcta-watermark">S</div>
             </a>
 
-            <a className="bcta-card" href="https://bcta.edu.au/western-australia/">
+            <a className="bcta-card" href="/western-australia">
               <span className="bcta-card-light"></span>
 
               <div className="bcta-card-header">

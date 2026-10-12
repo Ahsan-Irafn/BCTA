@@ -115,7 +115,6 @@ export default function CoursesClient({ courses }: CoursesClientProps) {
                 <div className={styles.cardHeader}>
                   <div className={styles.topBadges}>
                     <span className={styles.codeBadge}>{course.code}</span>
-                    <span className={styles.aqfBadge}>{course.aqfLevel || 'AQF Certified'}</span>
                   </div>
                   <h3 className={styles.courseTitle}>
                     <Link href={`/courses/${course.slug}`} style={{ color: 'inherit', textDecoration: 'none' }}>

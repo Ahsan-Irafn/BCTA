@@ -66,7 +66,6 @@ export default async function CourseDetailPage({ params }: CourseDetailPageProps
           <div className={styles.heroContent}>
             <div className={styles.badgeGroup}>
               <span className={styles.codeBadge}>{course.code}</span>
-              <span className={styles.aqfBadge}>{course.aqfLevel || 'AQF Certified'}</span>
               <span className={styles.rtoBadge}>RTO # {SITE_CONFIG.rtoCode}</span>
             </div>
 
@@ -228,10 +227,6 @@ export default async function CourseDetailPage({ params }: CourseDetailPageProps
               <div className={styles.factRow}>
                 <span className={styles.factLabel}>National Code</span>
                 <span className={styles.factValue}>{course.code}</span>
-              </div>
-              <div className={styles.factRow}>
-                <span className={styles.factLabel}>AQF Level</span>
-                <span className={styles.factValue}>{course.aqfLevel || 'Level 4'}</span>
               </div>
               <div className={styles.factRow}>
                 <span className={styles.factLabel}>RTO Registration</span>
