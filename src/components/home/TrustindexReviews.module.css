@@ -1,0 +1,301 @@
+/* TrustindexReviews.module.css - Google / Customer Reviews Section */
+
+.section {
+  position: relative;
+  padding: 5.5rem 0 6rem 0;
+  background: #ffffff;
+  color: #163058;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+/* Subtle ambient backdrop for visual breathing room and separation */
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1100px;
+  height: 480px;
+  background: radial-gradient(ellipse at top, rgba(255, 182, 5, 0.04) 0%, rgba(248, 250, 252, 0.8) 50%, rgba(255, 255, 255, 0) 80%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Header Area */
+.header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 3rem auto;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.headerVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Verified Google Reviews Pill */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(22, 48, 88, 0.04);
+  color: #163058;
+  border: 1px solid rgba(22, 48, 88, 0.1);
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 2px 6px rgba(15, 32, 56, 0.04);
+}
+
+.googleIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+}
+
+.eyebrowStars {
+  display: inline-flex;
+  gap: 2px;
+  color: #ffb605;
+}
+
+/* Headings */
+.title {
+  font-size: clamp(2rem, 3.4vw, 2.75rem);
+  font-weight: 800;
+  color: #163058;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  margin: 0 0 1rem 0;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  color: #475569;
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Reviews Widget Wrapper */
+.widgetWrapper {
+  position: relative;
+  min-height: 240px;
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: 12px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+}
+
+.widgetVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Confined host for Trustindex DOM */
+.widgetContainer {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; /* Safeguard mobile horizontal overflow without clip issues */
+}
+
+/* Responsive Skeleton Shimmer */
+.skeletonContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.skeletonCard {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.75rem;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeletonCard::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.7),
+    transparent
+  );
+  animation: shimmer 1.8s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    left: 100%;
+  }
+}
+
+.skeletonHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.skeletonAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #e2e8f0;
+}
+
+.skeletonLines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.skeletonLineShort {
+  height: 12px;
+  width: 60%;
+  background: #e2e8f0;
+  border-radius: 4px;
+}
+
+.skeletonLineTiny {
+  height: 10px;
+  width: 35%;
+  background: #e2e8f0;
+  border-radius: 4px;
+}
+
+.skeletonStars {
+  height: 14px;
+  width: 80px;
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.skeletonBody {
+  height: 50px;
+  background: #e2e8f0;
+  border-radius: 6px;
+  opacity: 0.7;
+}
+
+/* Fallback & Error State */
+.fallbackContainer {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  margin: 1rem 0;
+}
+
+.fallbackTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #163058;
+  margin: 0 0 0.5rem 0;
+}
+
+.fallbackText {
+  color: #64748b;
+  font-size: 0.95rem;
+  max-width: 520px;
+  margin: 0 auto 1.25rem auto;
+  line-height: 1.5;
+}
+
+.fallbackLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #163058;
+  color: #ffffff;
+  padding: 0.65rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.fallbackLink:hover {
+  background: #0f2038;
+  transform: translateY(-1px);
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .widgetWrapper {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .skeletonCard::after {
+    animation: none;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .skeletonContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 4rem 0 4.5rem 0;
+  }
+
+  .inner {
+    padding: 0 1rem;
+  }
+
+  .header {
+    margin-bottom: 2rem;
+  }
+
+  .skeletonContainer {
+    grid-template-columns: 1fr;
+  }
+}

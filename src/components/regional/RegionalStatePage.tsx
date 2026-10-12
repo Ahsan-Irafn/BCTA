@@ -22,6 +22,7 @@ import EnquiryForm from '@/components/common/EnquiryForm';
 import BuildersSlider from '@/components/common/BuildersSlider';
 import WhyChooseBcta from '@/components/home/WhyChooseBcta';
 import ReviewsSection from '@/components/home/ReviewsSection';
+import TrustindexReviews from '@/components/home/TrustindexReviews';
 import styles from './RegionalStatePage.module.css';
 
 interface RegionalStatePageProps {
@@ -526,7 +527,10 @@ export default function RegionalStatePage({ stateKey }: RegionalStatePageProps) 
       {/* 8. "What Our Students Say About Us" - Cinematic Student-Story Gallery */}
       <ReviewsSection />
 
-      {/* 9. Regional Campus & Consultation Details */}
+      {/* 9. "What Students Say About Us" - Verified Google / Trustindex Customer Reviews */}
+      <TrustindexReviews />
+
+      {/* 10. Regional Campus & Consultation Details */}
       <section className={styles.stateDetailSection} aria-label="Campus and Enrolment Info">
         <div className="container">
           <div className={styles.stateGrid}>
