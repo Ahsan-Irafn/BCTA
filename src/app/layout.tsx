@@ -19,25 +19,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const orgSchema = getOrganizationStructuredData();
-
   return (
-    <html lang="en-AU" className={redHatDisplay.variable}>
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
-        />
-      </head>
-      <body>
-        <a href="#main-content" className="skip-to-content">
-          Skip to main content
-        </a>
-        <Header />
-        <main id="main-content">
-          {children}
-        </main>
-        <Footer />
+    <html lang="en-AU" className={redHatDisplay.variable} style={{ margin: 0, padding: 0, background: '#07111f' }}>
+      <body style={{ margin: 0, padding: 0, background: '#07111f', minHeight: '100vh', overflowX: 'hidden' }}>
+        {children}
       </body>
     </html>
   );

@@ -47,7 +47,7 @@ async function main() {
     }
 
     await send('Page.enable');
-    await new Promise((r) => setTimeout(r, 1500));
+    await new Promise((r) => setTimeout(r, 4000));
 
     // Desktop screenshot with captureBeyondViewport
     await send('Emulation.setDeviceMetricsOverride', {
