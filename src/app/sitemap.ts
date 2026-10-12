@@ -15,19 +15,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const blogRoutes: MetadataRoute.Sitemap = publishedBlogs.map((post) => ({
-    url: `${BASE_URL}/blog/${post.slug}`,
-    lastModified: new Date(post.publishedAt),
-    changeFrequency: 'monthly',
-    priority: 0.7,
-  }));
-
-  const areaRoutes: MetadataRoute.Sitemap = publishedAreas.map((area) => ({
-    url: `${BASE_URL}/locations/${area.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.8,
-  }));
-
-  return [...staticRoutes, ...blogRoutes, ...areaRoutes];
+  return staticRoutes;
 }

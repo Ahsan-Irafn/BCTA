@@ -15,6 +15,12 @@ export interface RegionInfo {
   code: string;
 }
 
+export interface CourseUnit {
+  code: string;
+  title: string;
+  type: 'Core' | 'Elective';
+}
+
 export interface Course {
   id: string;
   code: string;
@@ -29,6 +35,20 @@ export interface Course {
   careerOutcomes: string[];
   externalUrl?: string;
   image: string;
+  aqfLevel?: string;
+  overview?: string;
+  licensingOutcome?: string;
+  entryRequirements?: string[];
+  units?: CourseUnit[];
+  fundingOptions?: {
+    state: string;
+    scheme: string;
+    note: string;
+  }[];
+  faqs?: {
+    question: string;
+    answer: string;
+  }[];
 }
 
 export interface Review {
