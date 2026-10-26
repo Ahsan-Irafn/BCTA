@@ -24,6 +24,12 @@ import ReviewsSection from '@/components/home/ReviewsSection';
 import TrustindexReviews from '@/components/home/TrustindexReviews';
 import CareerOutlookSection from '@/components/home/CareerOutlookSection';
 import RegisterNowSection from '@/components/home/RegisterNowSection';
+import AdelaideLocationSection from '@/components/home/AdelaideLocationSection';
+import FaqSection from '@/components/home/FaqSection';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import MotionSpotlightCard from '@/components/ui/MotionSpotlightCard';
+import MotionFeeCalculator from '@/components/ui/MotionFeeCalculator';
 import styles from './RegionalStatePage.module.css';
 
 interface RegionalStatePageProps {
@@ -50,44 +56,44 @@ const REGIONAL_COURSES: CourseItem[] = [
     code: 'CPC40120',
     title: 'Certificate IV in Building and Construction (Building)',
     category: 'Building & Construction',
-    duration: 'Up to 12 Months',
-    deliveryMode: 'Blended Delivery',
+    duration: '36 Weeks Excluding Holidays',
+    deliveryMode: 'Face To Face & Virtual Online',
     image: '/images/courses/cpc40120.jpg',
     description:
       'Australia’s benchmark qualification for trade professionals looking to step up into site management or apply for residential builder registration.',
-    slug: 'certificate-iv-in-building-construction',
+    slug: 'certificate-iv-in-building-construction-building-south-australia',
     externalUrl:
-      'https://bcta.edu.au/courses/certificate-iv-in-building-construction-building-south-australia/',
-    careerOutcomes: ['Licensed Builder', 'Site Supervisor', 'Construction Project Coordinator'],
+      '/courses/certificate-iv-in-building-construction-building-south-australia',
+    careerOutcomes: ['Licensed Builder', 'Site Supervisor', 'Leading Hand'],
   },
   {
     id: 'cpc50220',
     code: 'CPC50220',
     title: 'Diploma of Building and Construction (Building)',
     category: 'Commercial Construction',
-    duration: '1 to 2 Years',
-    deliveryMode: 'Classroom & On-site',
+    duration: '62 Weeks Excluding Holidays',
+    deliveryMode: 'Face To Face & Virtual Online',
     image: '/images/courses/cpc50220.jpg',
     description:
       'Master medium-rise structural engineering, complex contract administration, high-value estimating, and site safety management for senior builder licensing.',
-    slug: 'diploma-of-building-and-construction',
+    slug: 'diploma-of-building-and-construction-south-australia',
     externalUrl:
-      'https://bcta.edu.au/courses/diploma-of-building-and-construction-south-australia/',
-    careerOutcomes: ['Commercial Builder', 'Construction Manager', 'Head Site Superintendent'],
+      '/courses/diploma-of-building-and-construction-south-australia',
+    careerOutcomes: ['Commercial Builder', 'General Foreperson', 'Building Inspector'],
   },
   {
     id: 'cpc30220',
     code: 'CPC30220',
     title: 'Certificate III in Carpentry',
     category: 'Trade Apprenticeship',
-    duration: 'Trade Pathway',
+    duration: '36 Months (Apprenticeship)',
     deliveryMode: 'Workshop & On-site',
     image: '/images/courses/cpc30220.jpg',
     description:
       'Hands-on trade qualification covering precision setting out, subfloor framing, pitched roof construction, eaves, doors, and exterior cladding.',
-    slug: 'certificate-iii-in-carpentry',
+    slug: 'certificate-iii-in-carpentry-south-australia',
     externalUrl:
-      'https://bcta.edu.au/courses/certificate-iii-in-carpentry-south-australia/',
+      '/courses/certificate-iii-in-carpentry-south-australia',
     careerOutcomes: ['Qualified Carpenter', 'Formwork Carpenter', 'Finishing Specialist'],
   },
   {
@@ -95,30 +101,30 @@ const REGIONAL_COURSES: CourseItem[] = [
     code: 'SIT40721',
     title: 'Certificate IV in Patisserie',
     category: 'Culinary Arts & Hospitality',
-    duration: '1 to 2 Years',
-    deliveryMode: 'Commercial Kitchen',
+    duration: '60 Weeks (Including 72h Placement)',
+    deliveryMode: 'Face-to-Face Commercial Kitchen',
     image: '/images/courses/sit40721.jpg',
     description:
       'Specialist culinary qualification delivering classical gateaux, chocolate artistry, sourdough and Viennoiserie pastries, and kitchen team leadership.',
-    slug: 'sit40721-certificate-iv-in-patisserie',
+    slug: 'sit40721-certificate-iv-in-patisserie-south-australia',
     externalUrl:
-      'https://bcta.edu.au/courses/sit40721-certificate-iv-in-patisserie-south-australia/',
-    careerOutcomes: ['Head Pastry Chef', 'Speciality Baker', 'Chocolatier / Confectioner'],
+      '/courses/sit40721-certificate-iv-in-patisserie-south-australia',
+    careerOutcomes: ['Chef De Partie', 'Chef Patissier', 'Pastry Supervisor'],
   },
   {
     id: 'rii30820',
     code: 'RII30820',
     title: 'Certificate III in Civil Construction Plant Operations',
     category: 'Heavy Infrastructure',
-    duration: '12 to 24 Months',
-    deliveryMode: 'Plant Machinery Fleet',
+    duration: '33 Weeks (Including 120h Placement)',
+    deliveryMode: 'Classroom & Plant Fleet',
     image: '/images/courses/rii30820.jpg',
     description:
       'Gain hands-on practical competency in operating heavy civil plant machinery including excavators, wheeled loaders, backhoes, and rollers on major projects.',
-    slug: 'certificate-iii-in-civil-construction-plant-operations',
+    slug: 'certificate-iii-in-civil-construction-plant-operations-south-australia',
     externalUrl:
-      'https://bcta.edu.au/courses/certificate-iii-in-civil-construction-plant-operations-south-australia/',
-    careerOutcomes: ['Civil Plant Operator', 'Excavator Operator', 'Earthmoving Contractor'],
+      '/courses/certificate-iii-in-civil-construction-plant-operations-south-australia',
+    careerOutcomes: ['Civil Plant Operator', 'Excavator Operator', 'General Hand'],
   },
 ];
 
@@ -174,60 +180,8 @@ export default function RegionalStatePage({ stateKey }: RegionalStatePageProps) 
 
   return (
     <div className={styles.pageWrapper}>
-      {/* 1. Header Navigation */}
-      <header className={styles.topNav}>
-        <div className={`container ${styles.navContainer}`}>
-          <div className={styles.logoGroup}>
-            <Link href="/" className={styles.logoLink} aria-label="BCTA Home">
-              <Image
-                src="/images/logo.png"
-                alt="BCTA - Building & Construction Training Australia"
-                width={150}
-                height={48}
-                priority
-              />
-            </Link>
-            <span className={styles.stateTag}>
-              <MapPin size={12} aria-hidden="true" />
-              <span>{stateName} Portal</span>
-            </span>
-          </div>
-
-          <div className={styles.navActions}>
-            <div className={styles.stateSwitcher} aria-label="State selector">
-              <Link
-                href="/south-australia"
-                className={`${styles.switchLink} ${isSA ? styles.switchLinkActive : ''}`}
-              >
-                SA
-              </Link>
-              <Link
-                href="/western-australia"
-                className={`${styles.switchLink} ${!isSA ? styles.switchLinkActive : ''}`}
-              >
-                WA
-              </Link>
-              <Link href="https://www.bcta.vic.edu.au/home/" className={styles.switchLink}>
-                VIC ↗
-              </Link>
-            </div>
-
-            <a href={`tel:${SITE_CONFIG.phone.replace(/\s+/g, '')}`} className={styles.phoneLink}>
-              <Phone size={14} aria-hidden="true" />
-              <span>{SITE_CONFIG.phone}</span>
-            </a>
-
-            <a
-              href="https://bcta.edu.au/south-australia/#enquire"
-              className={styles.enquireBtn}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Enquire Now
-            </a>
-          </div>
-        </div>
-      </header>
+      {/* 1. Authentic Header Navigation */}
+      <Header currentState={stateKey} />
 
       {/* 2. Hero Section with YouTube Background Video (Reduced 20% Overlay) */}
       <section className={styles.heroSection} aria-label={`BCTA ${stateName} Hero`}>
@@ -378,7 +332,11 @@ export default function RegionalStatePage({ stateKey }: RegionalStatePageProps) 
             {/* Row 1: Top 2 Horizontal Split Feature Cards */}
             <div className={styles.topRowSplit}>
               {topCourses.map((course) => (
-                <article key={course.id} className={styles.courseCard}>
+                <MotionSpotlightCard
+                  key={course.id}
+                  className={styles.courseCard}
+                  spotlightColor="rgba(255, 182, 5, 0.16)"
+                >
                   <div className={`${styles.cardImageContainer} ${styles.topCardHeight}`}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -418,20 +376,27 @@ export default function RegionalStatePage({ stateKey }: RegionalStatePageProps) 
                         ))}
                       </div>
 
-                      <Link href={`/courses/${course.slug}`} className={styles.viewCourseBtn}>
+                      <Link
+                        href={`/courses/${course.id === 'cpc50220' && stateKey === 'wa' ? 'diploma-of-building-and-construction-western-australia' : course.slug}`}
+                        className={styles.viewCourseBtn}
+                      >
                         <span>View Course</span>
                         <ArrowRight size={16} aria-hidden="true" />
                       </Link>
                     </div>
                   </div>
-                </article>
+                </MotionSpotlightCard>
               ))}
             </div>
 
             {/* Row 2: Bottom 3 Staggered Grid Cards */}
             <div className={styles.bottomRowSplit}>
               {bottomCourses.map((course) => (
-                <article key={course.id} className={styles.courseCard}>
+                <MotionSpotlightCard
+                  key={course.id}
+                  className={styles.courseCard}
+                  spotlightColor="rgba(255, 182, 5, 0.16)"
+                >
                   <div className={`${styles.cardImageContainer} ${styles.bottomCardHeight}`}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
@@ -471,15 +436,23 @@ export default function RegionalStatePage({ stateKey }: RegionalStatePageProps) 
                         ))}
                       </div>
 
-                      <Link href={`/courses/${course.slug}`} className={styles.viewCourseBtn}>
+                      <Link
+                        href={`/courses/${course.id === 'cpc50220' && stateKey === 'wa' ? 'diploma-of-building-and-construction-western-australia' : course.slug}`}
+                        className={styles.viewCourseBtn}
+                      >
                         <span>View Course</span>
                         <ArrowRight size={16} aria-hidden="true" />
                       </Link>
                     </div>
                   </div>
-                </article>
+                </MotionSpotlightCard>
               ))}
             </div>
+          </div>
+
+          {/* Interactive Skills SA Funding & Fee Comparison Calculator (21st.dev Component) */}
+          <div style={{ marginTop: '3.5rem' }}>
+            <MotionFeeCalculator />
           </div>
         </div>
       </section>
@@ -541,25 +514,14 @@ export default function RegionalStatePage({ stateKey }: RegionalStatePageProps) 
         leadSource={stateKey === 'wa' ? 'Western Aus Form' : 'South Aus form'}
       />
 
-      {/* 7. Regional Footer */}
-      <footer className={styles.regionalFooter}>
-        <div className="container">
-          <div className={styles.footerTop}>
-            <Image
-              src="/images/logo.png"
-              alt="BCTA Logo"
-              width={140}
-              height={45}
-            />
-            <div className={styles.footerRto}>
-              <strong>RTO # 22597</strong> · Building and Construction Training Australia ({stateName} Division)
-            </div>
-          </div>
-          <div className={styles.footerCopy}>
-            © 2026 Building and Construction Training Australia (BCTA). All rights reserved.
-          </div>
-        </div>
-      </footer>
+      {/* 12. "Find Us in Adelaide" Location Section (South Australia Only) */}
+      {isSA && <AdelaideLocationSection />}
+
+      {/* 13. Frequently Asked Questions Section */}
+      <FaqSection />
+
+      {/* 14. Authentic State Footer (SA or WA) */}
+      <Footer currentState={stateKey} />
     </div>
   );
 }

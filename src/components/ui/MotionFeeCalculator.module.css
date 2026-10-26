@@ -1,0 +1,258 @@
+.calculatorCard {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 2.25rem;
+  box-shadow: 0 10px 30px rgba(13, 30, 56, 0.08);
+  width: 100%;
+}
+
+.calculatorHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ffb605;
+  background: #0d1e38;
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
+}
+
+.calculatorTitle {
+  font-size: 1.65rem;
+  font-weight: 900;
+  color: #0d1e38;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.4rem 0;
+}
+
+.calculatorSubtitle {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.pillContainer {
+  display: flex;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 4px;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.pillBtn {
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0.65rem 1.15rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+  outline: none;
+  transition: color 0.15s ease;
+}
+
+.pillBtn:hover {
+  color: #0d1e38;
+}
+
+.pillBtnActive {
+  color: #0d1e38;
+  font-weight: 700;
+}
+
+.pillActiveBg {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(13, 30, 56, 0.1);
+  z-index: 1;
+}
+
+.pillText {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.popularBadge {
+  font-size: 0.7rem;
+  font-weight: 800;
+  background: #ffb605;
+  color: #0d1e38;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.feeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+}
+
+@media (max-width: 868px) {
+  .feeGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.courseFeeCard {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.courseFeeCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(13, 30, 56, 0.08);
+  border-color: #cbd5e1;
+}
+
+.courseTop {
+  margin-bottom: 1.25rem;
+}
+
+.codeBadge {
+  display: inline-block;
+  font-family: monospace, var(--font-mono, monospace);
+  font-size: 0.8rem;
+  font-weight: 800;
+  background: #ffb605;
+  color: #0d1e38;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.courseHeading {
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: #0d1e38;
+  margin: 0 0 0.35rem 0;
+  line-height: 1.35;
+}
+
+.unitsSub {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.priceContainer {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.15rem;
+  margin-bottom: 1.25rem;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.priceNumber {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #0d1e38;
+  line-height: 1;
+}
+
+.priceSuffix {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.savingsBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.65rem;
+  padding: 0.25rem 0.6rem;
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.inclusionsList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.inclusionsList li {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.88rem;
+  color: #334155;
+}
+
+.applyBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.25rem;
+  background: #0d1e38;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.applyBtn:hover {
+  background: #ffb605;
+  color: #0d1e38;
+  transform: translateY(-1px);
+}
+
+.calculatorFootnote {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #f1f5f9;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}

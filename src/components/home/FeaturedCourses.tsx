@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { COURSES_DATA } from '@/lib/content';
 import { RegionCode } from '@/lib/types';
 import { Check, ArrowRight, Clock } from 'lucide-react';
@@ -93,15 +94,22 @@ export default function FeaturedCourses() {
                   <span>{course.duration}</span>
                 </div>
 
-                <a
-                  href={course.externalUrl || `https://bcta.edu.au/courses/`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.courseLink}
-                >
-                  <span>View Details</span>
-                  <ArrowRight size={14} aria-hidden="true" />
-                </a>
+                {course.externalUrl?.startsWith('/') ? (
+                  <Link href={course.externalUrl} className={styles.courseLink}>
+                    <span>View Details</span>
+                    <ArrowRight size={14} aria-hidden="true" />
+                  </Link>
+                ) : (
+                  <a
+                    href={course.externalUrl || `https://bcta.edu.au/courses/`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.courseLink}
+                  >
+                    <span>View Details</span>
+                    <ArrowRight size={14} aria-hidden="true" />
+                  </a>
+                )}
               </div>
             </article>
           ))}

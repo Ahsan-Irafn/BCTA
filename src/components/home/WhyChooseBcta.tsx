@@ -147,6 +147,11 @@ export default function WhyChooseBcta() {
       return;
     }
 
+    // Safety fallback
+    const timer = setTimeout(() => {
+      setIsSectionVisible(true);
+    }, 800);
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -156,11 +161,14 @@ export default function WhyChooseBcta() {
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     );
 
     observer.observe(node);
-    return () => observer.disconnect();
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
   }, [reduceMotion]);
 
   // Subtle pointer-based 3D tilt on desktop (clamped to ±5 degrees)

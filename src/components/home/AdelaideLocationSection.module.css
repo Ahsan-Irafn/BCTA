@@ -1,0 +1,264 @@
+/* AdelaideLocationSection.module.css - Polished Adelaide Location with Asymmetric Map Layout */
+
+.section {
+  position: relative;
+  background-color: #f8fafc;
+  padding: 4.5rem 0;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.layoutGrid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 2.5rem;
+  align-items: stretch;
+}
+
+/* Left: Address and Navigation Action Card */
+.addressCard {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 2.25rem 2rem;
+  box-shadow: 0 8px 24px rgba(22, 48, 88, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cardVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 182, 5, 0.15);
+  border: 1px solid rgba(255, 182, 5, 0.35);
+  color: #925800;
+  padding: 0.3rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 1rem;
+  width: fit-content;
+}
+
+.heading {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #163058;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.5rem 0;
+}
+
+.addressBlock {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.pinIconWrapper {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ffb605;
+  color: #163058;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(255, 182, 5, 0.35);
+  animation: pinPop 0.5s ease 0.3s backwards;
+}
+
+@keyframes pinPop {
+  0% { transform: scale(0.6); opacity: 0; }
+  70% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.addressDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.addressLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+}
+
+.addressText {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #163058;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.detailsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.detailItem {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.detailItem svg {
+  color: #163058;
+  flex-shrink: 0;
+}
+
+.directionsBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  height: 48px;
+  background: #ffb605;
+  color: #163058;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 14px rgba(255, 182, 5, 0.3);
+}
+
+.directionsBtn:hover {
+  background: #f5ab00;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255, 182, 5, 0.4);
+}
+
+.directionsBtn:active {
+  transform: translateY(0);
+}
+
+/* Right: Map Panel */
+.mapCard {
+  background-color: #f1f5f9;
+  background-image: 
+    linear-gradient(to right, rgba(22, 48, 88, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(22, 48, 88, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(22, 48, 88, 0.05);
+  position: relative;
+  min-height: 380px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+}
+
+.mapVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mapIframe {
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  border: none;
+  display: block;
+}
+
+/* Map Route Line Decoration */
+.routeIndicator {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #163058;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.routeDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  .addressCard,
+  .mapCard {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .pinIconWrapper {
+    animation: none !important;
+  }
+  .directionsBtn:hover {
+    transform: none !important;
+  }
+}
+
+/* Responsive queries */
+@media (max-width: 960px) {
+  .layoutGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .section {
+    padding: 3.5rem 0;
+  }
+  .mapCard {
+    min-height: 320px;
+  }
+  .mapIframe {
+    min-height: 320px;
+  }
+}

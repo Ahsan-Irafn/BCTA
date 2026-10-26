@@ -54,7 +54,7 @@ export const COURSES_DATA: Course[] = [
       },
     ],
     careerOutcomes: ['Licensed Residential Builder', 'Site Supervisor', 'Construction Project Coordinator', 'Building Inspector Assistant'],
-    externalUrl: 'https://bcta.edu.au/courses/certificate-iv-in-building-construction-building-south-australia/',
+    externalUrl: '/courses/certificate-iv-in-building-construction-building-south-australia',
     image: '/images/hero-banner.webp',
   },
   {
@@ -100,7 +100,7 @@ export const COURSES_DATA: Course[] = [
       },
     ],
     careerOutcomes: ['General Builder (Medium Rise)', 'Construction Manager', 'Head Site Superintendent', 'Principal Contractor'],
-    externalUrl: 'https://bcta.edu.au/courses/diploma-of-building-and-construction-south-australia/',
+    externalUrl: '/courses/diploma-of-building-and-construction-south-australia',
     image: '/images/hero-banner.webp',
   },
   {
@@ -147,7 +147,7 @@ export const COURSES_DATA: Course[] = [
       },
     ],
     careerOutcomes: ['Qualified Residential Carpenter', 'Formwork Carpenter', 'Finishing Carpenter', 'Building Contractor Subcontractor'],
-    externalUrl: 'https://bcta.edu.au/courses/certificate-iii-in-carpentry-south-australia/',
+    externalUrl: '/courses/certificate-iii-in-carpentry-south-australia',
     image: '/images/hero-banner.webp',
   },
   {
@@ -186,7 +186,7 @@ export const COURSES_DATA: Course[] = [
       },
     ],
     careerOutcomes: ['Civil Plant Operator', 'Excavator Operator', 'Earthmoving Contractor', 'Civil Infrastructure Specialist'],
-    externalUrl: 'https://bcta.edu.au/courses/certificate-iii-in-civil-construction-plant-operations-south-australia/',
+    externalUrl: '/courses/certificate-iii-in-civil-construction-plant-operations-south-australia',
     image: '/images/hero-banner.webp',
   },
   {
@@ -227,7 +227,7 @@ export const COURSES_DATA: Course[] = [
       },
     ],
     careerOutcomes: ['Head Pastry Chef', 'Speciality Baker', 'Chocolatier / Confectioner', 'Patisserie Business Owner'],
-    externalUrl: 'https://bcta.edu.au/courses/sit40721-certificate-iv-in-patisserie-south-australia/',
+    externalUrl: '/courses/sit40721-certificate-iv-in-patisserie-south-australia',
     image: '/images/hero-banner.webp',
   },
 ];

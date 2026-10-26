@@ -149,7 +149,8 @@
   margin-top: 8px;
 }
 
-.btnApply {
+.btnApply,
+.btnLogin {
   display: inline-block;
   background-color: var(--color-accent);
   color: #163058;
@@ -158,37 +159,17 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   padding: 10px 18px;
-  border-radius: 3px;
+  border-radius: 4px;
   text-align: center;
   text-decoration: none;
   transition: all var(--transition-fast);
 }
 
-.btnApply:hover {
+.btnApply:hover,
+.btnLogin:hover {
   background-color: var(--color-accent-hover);
   transform: translateY(-2px);
-}
-
-.btnLogin {
-  display: inline-block;
-  background-color: #0b1e38;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  font-weight: 700;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 10px 18px;
-  border-radius: 3px;
-  text-align: center;
-  text-decoration: none;
-  transition: all var(--transition-fast);
-}
-
-.btnLogin:hover {
-  background-color: #122846;
-  border-color: #ffffff;
-  transform: translateY(-2px);
+  color: #0d1e38;
 }
 
 /* Section 2: Contact Strip / Topbar */

@@ -1,10 +1,56 @@
 import React from 'react';
 import Image from 'next/image';
-import { SITE_CONFIG, FOOTER_EXPLORE_LINKS, FOOTER_CONTACT_LINKS } from '@/lib/constants';
+import Link from 'next/link';
+import { SITE_CONFIG } from '@/lib/constants';
 import { Phone, Globe, Mail, MapPin } from 'lucide-react';
 import styles from './Footer.module.css';
 
-export default function Footer() {
+interface FooterProps {
+  currentState?: 'sa' | 'wa' | 'vic';
+}
+
+export default function Footer({ currentState = 'sa' }: FooterProps) {
+  const isWA = currentState === 'wa';
+
+  const exploreLinks = isWA
+    ? [
+        { label: 'Fees', href: '/fees', external: true },
+        { label: 'Forms', href: 'https://bcta.edu.au/forms-western-australia/', external: true },
+        { label: 'Referral Agents', href: null },
+        { label: 'RPL / RCC & CT', href: null },
+        { label: 'Privacy Policy', href: '/privacy-policy', external: false },
+      ]
+    : [
+        { label: 'Fees', href: '/fees', external: true },
+        { label: 'Government Funding', href: '/government-funding-for-your-building-construction-course', external: false },
+        { label: 'Forms', href: '/forms', external: true },
+        { label: 'Privacy Policy', href: '/privacy-policy', external: false },
+      ];
+
+  const contactLinks = isWA
+    ? [
+        { label: 'About Us', href: 'https://bcta.edu.au/about-us-western-australia/', external: true },
+        { label: 'Reviews', href: 'https://bcta.edu.au/reviews-western-australia/', external: true },
+        { label: 'Contact Us', href: '/contact-us-western-australia', external: false },
+      ]
+    : [
+        { label: 'Contact Us', href: '/contact-us-south-australia', external: false },
+        { label: 'About Us', href: 'https://bcta.edu.au/about-us-south-australia/', external: true },
+        { label: 'Reviews', href: 'https://bcta.edu.au/reviews-south-australia/', external: true },
+      ];
+
+  const applyOnlineUrl = isWA
+    ? '/enrol-western-australia#enrol-form'
+    : '/enrol-south-australia#enrol-form';
+
+  const addressText = isWA
+    ? 'Unit 1, 220 Carr Pl, Leederville WA 6007, Australia'
+    : 'Level 30, 91 King William Street Adelaide SA 5000';
+
+  const mapUrl = isWA
+    ? 'https://maps.google.com/?q=Unit+1+220+Carr+Pl+Leederville+WA+6007+Australia'
+    : 'https://maps.google.com/?q=Level+30+91+King+William+Street+Adelaide+SA+5000';
+
   return (
     <footer className={styles.siteFooter} id="colophon">
       {/* 1. Main Footer 4-Column Grid */}
@@ -12,15 +58,15 @@ export default function Footer() {
         <div className={`container ${styles.footerGrid}`}>
           {/* Col 1: Logo & RTO Details */}
           <div className={styles.colLogo}>
-            <a href="https://bcta.edu.au/" aria-label="BCTA Home">
+            <Link href={isWA ? '/western-australia' : '/south-australia'} aria-label="BCTA Home">
               <Image
-                src="/images/logo.png"
+                src="/images/logo-white.png"
                 alt="BCTA - Building & Construction Training Australia"
                 width={180}
                 height={55}
                 className={styles.footerLogo}
               />
-            </a>
+            </Link>
             <p className={styles.rtoText}>
               <strong>RTO#</strong> 22597
             </p>
@@ -110,7 +156,7 @@ export default function Footer() {
           <div>
             <h5 className={styles.colHeading}>Explore</h5>
             <ul className={styles.footerLinkList}>
-              {FOOTER_EXPLORE_LINKS.map((item) => (
+              {exploreLinks.map((item) => (
                 <li key={item.label}>
                   {item.href ? (
                     <a href={item.href} {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
@@ -128,7 +174,7 @@ export default function Footer() {
           <div className={styles.colContact}>
             <h5 className={styles.colHeading}>Contact</h5>
             <ul className={styles.footerLinkList}>
-              {FOOTER_CONTACT_LINKS.map((item) => (
+              {contactLinks.map((item) => (
                 <li key={item.label}>
                   <a href={item.href} {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
                     {item.label}
@@ -138,28 +184,26 @@ export default function Footer() {
             </ul>
 
             <div className={styles.footerButtons}>
-              <a
-                href="https://bcta.edu.au/south-australia/#enquire"
+              <Link
+                href={applyOnlineUrl}
                 className={styles.btnApply}
-                target="_blank"
-                rel="noopener noreferrer"
               >
-                Apply Online
-              </a>
+                APPLY ONLINE
+              </Link>
               <a
                 href={SITE_CONFIG.lmsUrl}
                 className={styles.btnLogin}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Student Login
+                STUDENT LOGIN
               </a>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 2. Preserved Contact Bar / Topbar */}
+      {/* 2. Contact Bar / Topbar */}
       <div className={styles.contactStrip}>
         <div className={`container ${styles.contactStripInner}`}>
           {/* Phone */}
@@ -185,15 +229,15 @@ export default function Footer() {
             <span>{SITE_CONFIG.email}</span>
           </a>
 
-          {/* South Australia / Primary Corporate Address */}
+          {/* State Specific Office Address */}
           <a
             className={styles.contactItem}
-            href="https://maps.google.com/?q=Level+30+91+King+William+Street+Adelaide+SA+5000"
+            href={mapUrl}
             target="_blank"
             rel="noopener noreferrer"
           >
             <MapPin size={16} className={styles.contactIcon} aria-hidden="true" />
-            <span>Level 30, 91 King William Street Adelaide SA 5000</span>
+            <span>{addressText}</span>
           </a>
         </div>
       </div>

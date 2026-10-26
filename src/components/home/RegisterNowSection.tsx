@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
-import { Clock, Phone, Mail, ArrowRight, AlertCircle, ShieldCheck, MapPin } from 'lucide-react';
+import { Clock, Phone, Mail, ArrowRight, AlertCircle } from 'lucide-react';
 import { SITE_CONFIG } from '@/lib/constants';
 import styles from './RegisterNowSection.module.css';
 
 interface RegisterNowSectionProps {
+  id?: string;
   initialCourse?: string;
   leadSource?: string;
   stateName?: string;
@@ -14,10 +14,9 @@ interface RegisterNowSectionProps {
 }
 
 export default function RegisterNowSection({
+  id = 'enq1',
   initialCourse,
   leadSource = 'South Aus form',
-  stateName,
-  stateAddress,
 }: RegisterNowSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -38,18 +37,24 @@ export default function RegisterNowSection({
   // Inline validation errors state
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  // 1. Entrance animation observer
+  // 1. Entrance animation observer with fallback safety
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
     if (
       typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      (window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+        window.location.hash === '#enq1')
     ) {
       setIsVisible(true);
       return;
     }
+
+    // Safety fallback: ensure section content is never left hidden
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 800);
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -60,11 +65,14 @@ export default function RegisterNowSection({
           }
         });
       },
-      { threshold: 0.15, rootMargin: '40px' }
+      { threshold: 0.05, rootMargin: '60px' }
     );
 
     observer.observe(section);
-    return () => observer.disconnect();
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
   }, []);
 
   // 2. Load Zoho SalesIQ and analytics scripts safely once
@@ -108,14 +116,8 @@ export default function RegisterNowSection({
     }
   }, []);
 
-  // 3. Validation and submission handling
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    // Validate Honeypot first
-    if (honeypot) {
-      e.preventDefault();
-      return;
-    }
-
+  // 3. Validation helper methods
+  const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
     if (!firstName.trim()) {
@@ -126,59 +128,69 @@ export default function RegisterNowSection({
       newErrors.lastName = 'Last Name cannot be empty.';
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.trim()) {
       newErrors.email = 'Email cannot be empty.';
-    } else if (!emailRegex.test(email.trim())) {
-      newErrors.email = 'Please enter a valid email address.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      newErrors.email = 'Enter a valid email address.';
     }
 
     if (!mobile.trim()) {
       newErrors.mobile = 'Mobile number cannot be empty.';
+    } else if (!/^[0-9+() -]{8,20}$/.test(mobile.trim())) {
+      newErrors.mobile = 'Enter a valid contact number.';
     }
 
-    if (course === '-None-') {
+    if (!course || course === '-None-') {
       newErrors.course = 'Please select a course.';
     }
 
-    if (referral === '-None-') {
-      newErrors.referral = 'Please select how you heard about us.';
+    if (!referral || referral === '-None-') {
+      newErrors.referral = 'Please tell us how you heard about us.';
     }
 
     if (!consent) {
-      newErrors.consent = 'Please accept consent to submit your enquiry.';
+      newErrors.consent = 'You must consent to proceed.';
     }
 
-    if (Object.keys(newErrors).length > 0) {
-      e.preventDefault();
-      setErrors(newErrors);
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
-      // Focus first invalid field
-      const firstErrorField = Object.keys(newErrors)[0];
-      const fieldIdMap: { [key: string]: string } = {
-        firstName: 'First_Name',
-        lastName: 'Last_Name',
-        email: 'Email',
-        mobile: 'Mobile',
-        course: 'LEADCF8',
-        referral: 'LEADCF24',
-        consent: 'privacyTool5571336000116229005',
-      };
-      const elementToFocus = document.getElementById(fieldIdMap[firstErrorField]);
-      if (elementToFocus) {
-        elementToFocus.focus();
+  // 4. Form Submit Handler with Zoho analytics sync
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // If bot filled honeypot, silent drop
+    if (honeypot) {
+      e.preventDefault();
+      return;
+    }
+
+    if (!validateForm()) {
+      e.preventDefault();
+      // Focus first error field for accessibility
+      const firstErrorKey = Object.keys(errors)[0];
+      if (firstErrorKey) {
+        const idMap: { [key: string]: string } = {
+          firstName: 'First_Name',
+          lastName: 'Last_Name',
+          email: 'Email',
+          mobile: 'Mobile',
+          course: 'LEADCF8',
+          referral: 'LEADCF24',
+          consent: 'privacyTool5571336000116229005',
+        };
+        const el = document.getElementById(idMap[firstErrorKey] || '');
+        if (el) el.focus();
       }
       return;
     }
 
-    // Validation succeeded: clear errors and run visitor tracking
-    setErrors({});
     setIsSubmitting(true);
 
+    // Sync with Zoho SalesIQ if available
     try {
       const win = window as any;
+      const ldtUvid = document.getElementById('LDTuvid') as HTMLInputElement;
       if (win.$zoho?.salesiq?.visitor) {
-        const ldtUvid = document.getElementById('LDTuvid') as HTMLInputElement | null;
         if (ldtUvid && typeof win.$zoho.salesiq.visitor.uniqueid === 'function') {
           ldtUvid.value = win.$zoho.salesiq.visitor.uniqueid();
         }
@@ -190,120 +202,77 @@ export default function RegisterNowSection({
         }
       }
     } catch {
-      // Tracking failures must not block enquiry submission
+      // Non-blocking telemetry
     }
-
-    // Set document charset UTF-8 before submitting
-    try {
-      (document as any).charset = 'UTF-8';
-    } catch {
-      // Ignore
-    }
-
-    // Native HTML form POST will continue to https://crm.zoho.com/crm/WebToLeadForm
   };
 
   return (
     <section
       ref={sectionRef}
-      id="register-now"
+      id={id}
       className={styles.section}
-      aria-label="Register Now and Course Enquiry"
+      aria-label="Registration and Consultation Form"
     >
       <div className={styles.container}>
         <div className={styles.layoutGrid}>
-          {/* Left Column: Intro, Authentic Training Photo & Contact Details */}
+          {/* Left Column: Direct Call-Us & Overview matching source site */}
           <div className={`${styles.leftCol} ${isVisible ? styles.leftVisible : ''}`}>
-            <div className={styles.badge}>
-              <span>02 // Enrolment &amp; Advisory</span>
-            </div>
-
-            <h2 className={styles.title}>
-              Take the next step in your construction career
+            <h2 className={styles.heroHeading}>
+              <span>Register now</span>
+              <span className={styles.heroArrow} aria-hidden="true">
+                <ArrowRight size={32} />
+              </span>
             </h2>
 
-            <p className={styles.introText}>
-              Please fill in your details to receive comprehensive course guides, unit outlines, and
-              timetable schedules. One of our specialist course advisors will be in touch, or call us
-              directly.
+            <p className={styles.heroSubtitle}>
+              Please fill in to get detailed information about the course. One of our course
+              representatives will be in contact or call us.
             </p>
 
-            {/* Framed authentic training image with offset decorative layer */}
-            <div className={styles.imageFrame}>
-              <div className={styles.imageFrameOffset} aria-hidden="true" />
-              <div className={styles.imageContainer}>
-                <Image
-                  src="/images/builders/builder-01.jpg"
-                  alt="BCTA building and construction students in practical training"
-                  width={640}
-                  height={400}
-                  className={styles.image}
-                />
-              </div>
-            </div>
+            <h3 className={styles.callUsTitle}>Call Us</h3>
 
-            {/* Contact details card */}
-            <div className={styles.contactCard}>
-              <h3 className={styles.contactTitle}>Admissions &amp; Consultation</h3>
-              <div className={styles.contactList}>
-                <div className={styles.contactItem}>
-                  <div className={styles.contactIcon} aria-hidden="true">
+            <div className={styles.contactRows}>
+              <div className={styles.contactRow}>
+                <span className={styles.contactRowLeft}>Mon - Friday</span>
+                <div className={styles.contactRowRight}>
+                  <div className={styles.contactIconCircle} aria-hidden="true">
                     <Clock size={16} />
                   </div>
-                  <div className={styles.contactContent}>
-                    <span className={styles.contactLabel}>Opening Hours</span>
-                    <span>Monday – Friday: 09:30 AM – 05:30 PM (ACST / AWST)</span>
-                  </div>
+                  <span>09.30 AM - 05.30 PM</span>
                 </div>
+              </div>
 
-                <div className={styles.contactItem}>
-                  <div className={styles.contactIcon} aria-hidden="true">
+              <div className={styles.contactRow}>
+                <span className={styles.contactRowLeft}>Phone</span>
+                <div className={styles.contactRowRight}>
+                  <div className={styles.contactIconCircle} aria-hidden="true">
                     <Phone size={16} />
                   </div>
-                  <div className={styles.contactContent}>
-                    <span className={styles.contactLabel}>Direct Inquiries Phone</span>
-                    <a href={`tel:${SITE_CONFIG.phone.replace(/\s+/g, '')}`} className={styles.contactLink}>
-                      {SITE_CONFIG.phone}
-                    </a>
-                  </div>
+                  <a href={`tel:${SITE_CONFIG.phone.replace(/\s+/g, '')}`} className={styles.contactLink}>
+                    {SITE_CONFIG.phone}
+                  </a>
                 </div>
+              </div>
 
-                <div className={styles.contactItem}>
-                  <div className={styles.contactIcon} aria-hidden="true">
+              <div className={styles.contactRow}>
+                <span className={styles.contactRowLeft}>Email</span>
+                <div className={styles.contactRowRight}>
+                  <div className={styles.contactIconCircle} aria-hidden="true">
                     <Mail size={16} />
                   </div>
-                  <div className={styles.contactContent}>
-                    <span className={styles.contactLabel}>Email Admissions</span>
-                    <a href={`mailto:${SITE_CONFIG.email}`} className={styles.contactLink}>
-                      {SITE_CONFIG.email}
-                    </a>
-                  </div>
+                  <a href={`mailto:${SITE_CONFIG.email}`} className={styles.contactLink}>
+                    {SITE_CONFIG.email}
+                  </a>
                 </div>
-
-                {stateAddress && (
-                  <div className={styles.contactItem}>
-                    <div className={styles.contactIcon} aria-hidden="true">
-                      <MapPin size={16} />
-                    </div>
-                    <div className={styles.contactContent}>
-                      <span className={styles.contactLabel}>{stateName ? `${stateName} Training Facility` : 'Campus Facility'}</span>
-                      <span>{stateAddress}</span>
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           </div>
 
           {/* Right Column: Zoho WebToLeadForm */}
           <div className={`${styles.rightCol} ${isVisible ? styles.rightVisible : ''}`}>
-            <div className={styles.formPanel}>
+            <div className={styles.formCard}>
               <div className={styles.formHeader}>
                 <h3 className={styles.formTitle}>Register Now</h3>
-                <p className={styles.formSubtitle}>
-                  Submit your details below to receive full syllabus information and fast-track your
-                  course registration.
-                </p>
               </div>
 
               {/* Native Zoho Form */}
@@ -348,11 +317,11 @@ export default function RegisterNowSection({
                   aria-hidden="true"
                 />
 
-                {/* Row 1: First Name & Last Name */}
+                {/* Row 1: First Name & Last Name (2 columns on desktop) */}
                 <div className={styles.twoColRow}>
                   <div className={styles.fieldGroup}>
                     <label htmlFor="First_Name" className={styles.label}>
-                      First Name <span className={styles.requiredStar}>*</span>
+                      <span>First Name</span> <span className={styles.requiredStar}>*</span>
                     </label>
                     <input
                       type="text"
@@ -364,16 +333,15 @@ export default function RegisterNowSection({
                         setFirstName(e.target.value);
                         if (errors.firstName) setErrors((prev) => ({ ...prev, firstName: '' }));
                       }}
-                      placeholder="e.g. John"
+                      placeholder="First Name *"
                       autoComplete="given-name"
                       aria-required="true"
                       aria-invalid={!!errors.firstName}
-                      aria-describedby={errors.firstName ? 'firstNameError' : undefined}
                       className={`${styles.input} ${errors.firstName ? styles.inputError : ''}`}
                     />
                     {errors.firstName && (
-                      <span id="firstNameError" className={styles.errorText} role="alert">
-                        <AlertCircle size={13} aria-hidden="true" />
+                      <span className={styles.errorText} role="alert">
+                        <AlertCircle size={12} aria-hidden="true" />
                         {errors.firstName}
                       </span>
                     )}
@@ -381,7 +349,7 @@ export default function RegisterNowSection({
 
                   <div className={styles.fieldGroup}>
                     <label htmlFor="Last_Name" className={styles.label}>
-                      Last Name <span className={styles.requiredStar}>*</span>
+                      <span>Last Name</span> <span className={styles.requiredStar}>*</span>
                     </label>
                     <input
                       type="text"
@@ -393,27 +361,26 @@ export default function RegisterNowSection({
                         setLastName(e.target.value);
                         if (errors.lastName) setErrors((prev) => ({ ...prev, lastName: '' }));
                       }}
-                      placeholder="e.g. Smith"
+                      placeholder="Last Name *"
                       autoComplete="family-name"
                       aria-required="true"
                       aria-invalid={!!errors.lastName}
-                      aria-describedby={errors.lastName ? 'lastNameError' : undefined}
                       className={`${styles.input} ${errors.lastName ? styles.inputError : ''}`}
                     />
                     {errors.lastName && (
-                      <span id="lastNameError" className={styles.errorText} role="alert">
-                        <AlertCircle size={13} aria-hidden="true" />
+                      <span className={styles.errorText} role="alert">
+                        <AlertCircle size={12} aria-hidden="true" />
                         {errors.lastName}
                       </span>
                     )}
                   </div>
                 </div>
 
-                {/* Row 2: Email & Mobile */}
+                {/* Row 2: Email & Mobile (2 columns on desktop) */}
                 <div className={styles.twoColRow}>
                   <div className={styles.fieldGroup}>
                     <label htmlFor="Email" className={styles.label}>
-                      Email <span className={styles.requiredStar}>*</span>
+                      <span>Email</span> <span className={styles.requiredStar}>*</span>
                     </label>
                     <input
                       type="email"
@@ -425,16 +392,15 @@ export default function RegisterNowSection({
                         setEmail(e.target.value);
                         if (errors.email) setErrors((prev) => ({ ...prev, email: '' }));
                       }}
-                      placeholder="e.g. john.smith@example.com"
+                      placeholder="Email *"
                       autoComplete="email"
                       aria-required="true"
                       aria-invalid={!!errors.email}
-                      aria-describedby={errors.email ? 'emailError' : undefined}
                       className={`${styles.input} ${errors.email ? styles.inputError : ''}`}
                     />
                     {errors.email && (
-                      <span id="emailError" className={styles.errorText} role="alert">
-                        <AlertCircle size={13} aria-hidden="true" />
+                      <span className={styles.errorText} role="alert">
+                        <AlertCircle size={12} aria-hidden="true" />
                         {errors.email}
                       </span>
                     )}
@@ -442,7 +408,7 @@ export default function RegisterNowSection({
 
                   <div className={styles.fieldGroup}>
                     <label htmlFor="Mobile" className={styles.label}>
-                      Mobile <span className={styles.requiredStar}>*</span>
+                      <span>Mobile</span> <span className={styles.requiredStar}>*</span>
                     </label>
                     <input
                       type="tel"
@@ -454,26 +420,25 @@ export default function RegisterNowSection({
                         setMobile(e.target.value);
                         if (errors.mobile) setErrors((prev) => ({ ...prev, mobile: '' }));
                       }}
-                      placeholder="e.g. 0400 000 000"
+                      placeholder="Mobile *"
                       autoComplete="tel"
                       aria-required="true"
                       aria-invalid={!!errors.mobile}
-                      aria-describedby={errors.mobile ? 'mobileError' : undefined}
                       className={`${styles.input} ${errors.mobile ? styles.inputError : ''}`}
                     />
                     {errors.mobile && (
-                      <span id="mobileError" className={styles.errorText} role="alert">
-                        <AlertCircle size={13} aria-hidden="true" />
+                      <span className={styles.errorText} role="alert">
+                        <AlertCircle size={12} aria-hidden="true" />
                         {errors.mobile}
                       </span>
                     )}
                   </div>
                 </div>
 
-                {/* Field 3: Course Dropdown */}
+                {/* Row 3: Select Course */}
                 <div className={styles.fieldGroup}>
                   <label htmlFor="LEADCF8" className={styles.label}>
-                    Course <span className={styles.requiredStar}>*</span>
+                    <span>Course</span> <span className={styles.requiredStar}>*</span>
                   </label>
                   <select
                     id="LEADCF8"
@@ -485,7 +450,6 @@ export default function RegisterNowSection({
                     }}
                     aria-required="true"
                     aria-invalid={!!errors.course}
-                    aria-describedby={errors.course ? 'courseError' : undefined}
                     className={`${styles.select} ${errors.course ? styles.selectError : ''}`}
                   >
                     <option value="-None-">Select Course</option>
@@ -503,17 +467,17 @@ export default function RegisterNowSection({
                     </option>
                   </select>
                   {errors.course && (
-                    <span id="courseError" className={styles.errorText} role="alert">
-                      <AlertCircle size={13} aria-hidden="true" />
+                    <span className={styles.errorText} role="alert">
+                      <AlertCircle size={12} aria-hidden="true" />
                       {errors.course}
                     </span>
                   )}
                 </div>
 
-                {/* Field 4: Nationality Dropdown (Optional) */}
+                {/* Row 4: Select Nationality */}
                 <div className={styles.fieldGroup}>
                   <label htmlFor="LEADCF29" className={styles.label}>
-                    Nationality <span style={{ color: '#94a3b8', fontWeight: 400 }}>(Optional)</span>
+                    <span>Nationality</span> <span style={{ color: '#94a3b8', fontWeight: 400 }}>(Optional)</span>
                   </label>
                   <select
                     id="LEADCF29"
@@ -533,10 +497,10 @@ export default function RegisterNowSection({
                   </select>
                 </div>
 
-                {/* Field 5: How did you hear about us Dropdown */}
+                {/* Row 5: How did you hear about us */}
                 <div className={styles.fieldGroup}>
                   <label htmlFor="LEADCF24" className={styles.label}>
-                    How did you hear about us <span className={styles.requiredStar}>*</span>
+                    <span>How did you hear about us</span> <span className={styles.requiredStar}>*</span>
                   </label>
                   <select
                     id="LEADCF24"
@@ -548,7 +512,6 @@ export default function RegisterNowSection({
                     }}
                     aria-required="true"
                     aria-invalid={!!errors.referral}
-                    aria-describedby={errors.referral ? 'referralError' : undefined}
                     className={`${styles.select} ${errors.referral ? styles.selectError : ''}`}
                   >
                     <option value="-None-">How did you hear about us</option>
@@ -557,18 +520,18 @@ export default function RegisterNowSection({
                     <option value="Sales Person">Sales Person</option>
                   </select>
                   {errors.referral && (
-                    <span id="referralError" className={styles.errorText} role="alert">
-                      <AlertCircle size={13} aria-hidden="true" />
+                    <span className={styles.errorText} role="alert">
+                      <AlertCircle size={12} aria-hidden="true" />
                       {errors.referral}
                     </span>
                   )}
                 </div>
 
-                {/* Field 6: Consent Checkbox */}
+                {/* Row 6: Consent Checkbox */}
                 <div className={styles.fieldGroup}>
                   <label
                     htmlFor="privacyTool5571336000116229005"
-                    className={styles.consentGroup}
+                    className={styles.consentRow}
                   >
                     <input
                       type="checkbox"
@@ -580,7 +543,6 @@ export default function RegisterNowSection({
                       }}
                       aria-required="true"
                       aria-invalid={!!errors.consent}
-                      aria-describedby={errors.consent ? 'consentError' : undefined}
                       className={styles.checkbox}
                     />
                     <span className={styles.consentText}>
@@ -589,28 +551,22 @@ export default function RegisterNowSection({
                     </span>
                   </label>
                   {errors.consent && (
-                    <span id="consentError" className={styles.errorText} role="alert">
-                      <AlertCircle size={13} aria-hidden="true" />
+                    <span className={styles.errorText} role="alert">
+                      <AlertCircle size={12} aria-hidden="true" />
                       {errors.consent}
                     </span>
                   )}
                 </div>
 
-                {/* Submit Button */}
+                {/* Row 7: Submit Button */}
                 <button
                   type="submit"
                   id="formsubmit"
                   disabled={isSubmitting}
                   className={styles.submitBtn}
                 >
-                  <span>{isSubmitting ? 'Submitting...' : 'Submit'}</span>
-                  <ArrowRight size={18} className={styles.submitBtnIcon} aria-hidden="true" />
+                  {isSubmitting ? 'SUBMITTING...' : 'SUBMIT'}
                 </button>
-
-                <p className={styles.formDisclaimer}>
-                  Your privacy is important to us. Submitted details are processed securely in accordance
-                  with Australian Privacy Principles.
-                </p>
               </form>
             </div>
           </div>

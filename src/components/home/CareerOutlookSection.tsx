@@ -101,6 +101,20 @@ export default function CareerOutlookSection() {
       return;
     }
 
+    // Safety fallback: ensure metrics are visible
+    const timer = setTimeout(() => {
+      if (!hasAnimated.current) {
+        hasAnimated.current = true;
+        setIsVisible(true);
+        setCounts({
+          jobs: '2,400',
+          growth: '9.2',
+          earnings: '130',
+          satisfaction: '4.1',
+        });
+      }
+    }, 800);
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -144,11 +158,14 @@ export default function CareerOutlookSection() {
           }
         });
       },
-      { threshold: 0.2, rootMargin: '40px' }
+      { threshold: 0.1, rootMargin: '60px' }
     );
 
     observer.observe(section);
-    return () => observer.disconnect();
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
   }, []);
 
   return (

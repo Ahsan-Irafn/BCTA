@@ -8,6 +8,7 @@ export const SITE_CONFIG = {
   phone: '1300 11 2282',
   email: 'enquiries@bcta.vic.edu.au',
   mainWebsite: 'https://bcta.edu.au',
+  url: 'https://bcta.edu.au',
   lmsUrl: 'https://lms.bcta.vic.edu.au',
   applyUrl: '/enquire-now/#enq1',
   socialLinks: {
@@ -105,11 +106,12 @@ export const NAV_LINKS = [
   {
     label: 'Courses',
     children: [
-      { label: 'Certificate III in Carpentry', href: 'https://bcta.edu.au/courses/certificate-iii-in-carpentry-south-australia/', external: true },
-      { label: 'Certificate III in Civil Construction Plant Operations', href: 'https://bcta.edu.au/courses/certificate-iii-in-civil-construction-plant-operations-south-australia/', external: true },
-      { label: 'Certificate IV in Building & Construction', href: 'https://bcta.edu.au/courses/certificate-iv-in-building-construction-building-south-australia/', external: true },
-      { label: 'Diploma of Building and Construction', href: 'https://bcta.edu.au/courses/diploma-of-building-and-construction-south-australia/', external: true },
-      { label: 'SIT40721 - Certificate IV in Patisserie', href: 'https://bcta.edu.au/courses/sit40721-certificate-iv-in-patisserie-south-australia/', external: true },
+      { label: 'Certificate IV in Building & Construction (SA)', href: '/courses/certificate-iv-in-building-construction-building-south-australia', external: false },
+      { label: 'Diploma of Building and Construction (SA)', href: '/courses/diploma-of-building-and-construction-south-australia', external: false },
+      { label: 'Diploma of Building and Construction (WA)', href: '/courses/diploma-of-building-and-construction-western-australia', external: false },
+      { label: 'Certificate III in Carpentry (SA)', href: '/courses/certificate-iii-in-carpentry-south-australia', external: false },
+      { label: 'Certificate III in Civil Construction Plant Operations (SA)', href: '/courses/certificate-iii-in-civil-construction-plant-operations-south-australia', external: false },
+      { label: 'SIT40721 - Certificate IV in Patisserie (SA)', href: '/courses/sit40721-certificate-iv-in-patisserie-south-australia', external: false },
     ],
   },
   { label: 'About Us', href: 'https://bcta.edu.au/about-us-south-australia/', external: true },

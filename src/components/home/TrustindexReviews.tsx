@@ -33,6 +33,11 @@ export default function TrustindexReviews({
       return;
     }
 
+    // Safety fallback
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 800);
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -42,11 +47,14 @@ export default function TrustindexReviews({
           }
         });
       },
-      { threshold: 0.15, rootMargin: '60px' }
+      { threshold: 0.1, rootMargin: '60px' }
     );
 
     observer.observe(section);
-    return () => observer.disconnect();
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
   }, []);
 
   // 2. Client-side isolated Trustindex script loading with Strict Mode & SPA navigation safety

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { COURSES_DATA } from '@/lib/content';
 import { SITE_CONFIG } from '@/lib/constants';
 import { constructMetadata } from '@/lib/seo';
@@ -26,14 +26,33 @@ interface CourseDetailPageProps {
   }>;
 }
 
+const SLUG_REDIRECTS: Record<string, string> = {
+  'diploma-of-building-and-construction': '/courses/diploma-of-building-and-construction-south-australia',
+  'certificate-iv-in-building-construction': '/courses/certificate-iv-in-building-construction-building-south-australia',
+  'certificate-iv-in-building-and-construction': '/courses/certificate-iv-in-building-construction-building-south-australia',
+  'certificate-iii-in-carpentry': '/courses/certificate-iii-in-carpentry-south-australia',
+  'sit40721-certificate-iv-in-patisserie': '/courses/sit40721-certificate-iv-in-patisserie-south-australia',
+  'certificate-iii-in-civil-construction-plant-operations': '/courses/certificate-iii-in-civil-construction-plant-operations-south-australia',
+  'civil-construction': '/courses/certificate-iii-in-civil-construction-plant-operations-south-australia',
+};
+
 export async function generateStaticParams() {
-  return COURSES_DATA.map((course) => ({
+  return COURSES_DATA.filter(
+    (course) => course.slug !== 'diploma-of-building-and-construction'
+  ).map((course) => ({
     slug: course.slug,
   }));
 }
 
 export async function generateMetadata({ params }: CourseDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
+  if (SLUG_REDIRECTS[slug]) {
+    return constructMetadata({
+      title: 'Course Redirection',
+      description: 'Redirecting to authentic course qualification page.',
+      canonical: SLUG_REDIRECTS[slug],
+    });
+  }
   const course = COURSES_DATA.find((c) => c.slug === slug);
 
   if (!course) {
@@ -52,6 +71,9 @@ export async function generateMetadata({ params }: CourseDetailPageProps): Promi
 
 export default async function CourseDetailPage({ params }: CourseDetailPageProps) {
   const { slug } = await params;
+  if (SLUG_REDIRECTS[slug]) {
+    redirect(SLUG_REDIRECTS[slug]);
+  }
   const course = COURSES_DATA.find((c) => c.slug === slug);
 
   if (!course) {
