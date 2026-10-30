@@ -60,9 +60,13 @@ export default function MotionFeeCalculator() {
         </div>
 
         {/* Tier Selector Pills */}
-        <div className={styles.pillContainer} role="tablist">
+        <div className={styles.pillContainer} role="tablist" aria-label="Funding Tier Options">
           <button
             type="button"
+            role="tab"
+            aria-selected={tier === 'standard'}
+            aria-controls="fee-grid-panel"
+            id="tab-tier-standard"
             className={`${styles.pillBtn} ${tier === 'standard' ? styles.pillBtnActive : ''}`}
             onClick={() => setTier('standard')}
           >
@@ -78,6 +82,10 @@ export default function MotionFeeCalculator() {
 
           <button
             type="button"
+            role="tab"
+            aria-selected={tier === 'subsidised'}
+            aria-controls="fee-grid-panel"
+            id="tab-tier-subsidised"
             className={`${styles.pillBtn} ${tier === 'subsidised' ? styles.pillBtnActive : ''}`}
             onClick={() => setTier('subsidised')}
           >
@@ -95,6 +103,10 @@ export default function MotionFeeCalculator() {
 
           <button
             type="button"
+            role="tab"
+            aria-selected={tier === 'concession'}
+            aria-controls="fee-grid-panel"
+            id="tab-tier-concession"
             className={`${styles.pillBtn} ${tier === 'concession' ? styles.pillBtnActive : ''}`}
             onClick={() => setTier('concession')}
           >
@@ -111,7 +123,7 @@ export default function MotionFeeCalculator() {
       </div>
 
       {/* Comparison Grid */}
-      <div className={styles.feeGrid}>
+      <div id="fee-grid-panel" role="tabpanel" aria-labelledby={`tab-tier-${tier}`} className={styles.feeGrid}>
         {COURSES_FEE_DATA.map((course) => {
           const activePrice =
             tier === 'standard'

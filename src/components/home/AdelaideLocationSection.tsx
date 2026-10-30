@@ -116,15 +116,19 @@ export default function AdelaideLocationSection() {
               <span>King William St CBD</span>
             </div>
 
-            <iframe
-              src={MAP_EMBED_URL}
-              className={styles.mapIframe}
-              loading="lazy"
-              title={`Google Map showing ${ADELAIDE_ADDRESS}`}
-              aria-label={`Google Map showing ${ADELAIDE_ADDRESS}`}
-              allowFullScreen={false}
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+            {isVisible ? (
+              <iframe
+                src={MAP_EMBED_URL}
+                className={styles.mapIframe}
+                loading="lazy"
+                title={`Google Map showing ${ADELAIDE_ADDRESS}`}
+                aria-label={`Google Map showing ${ADELAIDE_ADDRESS}`}
+                allowFullScreen={false}
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            ) : (
+              <div style={{ height: '100%', minHeight: 340, background: '#0b192b' }} />
+            )}
           </div>
         </div>
       </div>

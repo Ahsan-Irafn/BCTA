@@ -57,8 +57,9 @@ export default function TrustindexReviews({
     };
   }, []);
 
-  // 2. Client-side isolated Trustindex script loading with Strict Mode & SPA navigation safety
+  // 2. Client-side isolated Trustindex script loading on demand when visible
   useEffect(() => {
+    if (!isVisible) return;
     const container = containerRef.current;
     if (!container) return;
 
@@ -134,7 +135,7 @@ export default function TrustindexReviews({
         container.innerHTML = '';
       }
     };
-  }, []);
+  }, [isVisible]);
 
   return (
     <section
@@ -169,7 +170,7 @@ export default function TrustindexReviews({
               </svg>
             </span>
             <span>Customer & Google Reviews</span>
-            <span className={styles.eyebrowStars} aria-label="5 out of 5 stars">
+            <span className={styles.eyebrowStars} role="img" aria-label="5 out of 5 stars">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} size={13} fill="currentColor" stroke="none" />
               ))}

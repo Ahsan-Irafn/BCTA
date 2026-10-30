@@ -75,7 +75,7 @@ export default function RegisterNowSection({
     };
   }, []);
 
-  // 2. Load Zoho SalesIQ and analytics scripts safely once
+  // 2. Load Zoho SalesIQ and analytics scripts safely on user interaction or idle
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -89,15 +89,34 @@ export default function RegisterNowSection({
       ready: function () {},
     };
 
-    // Inject SalesIQ widget script if not already added
-    if (!document.getElementById('zsiqscript')) {
+    const loadSalesIQ = () => {
+      if (document.getElementById('zsiqscript')) return;
       const s = document.createElement('script');
       s.type = 'text/javascript';
       s.id = 'zsiqscript';
       s.defer = true;
       s.src = 'https://salesiq.zoho.com/widget';
       document.body.appendChild(s);
-    }
+    };
+
+    // Defer loading until user interaction or idle timer (prevents blocking TBT/LCP)
+    const interactionEvents = ['scroll', 'touchstart', 'mousemove', 'keydown'];
+    const handleInteraction = () => {
+      loadSalesIQ();
+      interactionEvents.forEach((ev) => window.removeEventListener(ev, handleInteraction));
+    };
+
+    interactionEvents.forEach((ev) =>
+      window.addEventListener(ev, handleInteraction, { passive: true, once: true })
+    );
+
+    const idleTimer = setTimeout(() => {
+      if (typeof (window as any).requestIdleCallback === 'function') {
+        (window as any).requestIdleCallback(loadSalesIQ);
+      } else {
+        loadSalesIQ();
+      }
+    }, 5000);
 
     // Check for smarturl parameter on load
     try {
@@ -114,6 +133,11 @@ export default function RegisterNowSection({
     } catch {
       // Ignore URL parsing errors
     }
+
+    return () => {
+      clearTimeout(idleTimer);
+      interactionEvents.forEach((ev) => window.removeEventListener(ev, handleInteraction));
+    };
   }, []);
 
   // 3. Validation helper methods

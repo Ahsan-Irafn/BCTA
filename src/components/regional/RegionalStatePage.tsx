@@ -162,7 +162,12 @@ const WHAT_YOU_LEARN: WhatYouLearnItem[] = [
 ];
 
 export default function RegionalStatePage({ stateKey }: RegionalStatePageProps) {
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const isSA = stateKey === 'sa';
   const stateName = isSA ? 'South Australia' : 'Western Australia';
@@ -183,24 +188,27 @@ export default function RegionalStatePage({ stateKey }: RegionalStatePageProps) 
       {/* 1. Authentic Header Navigation */}
       <Header currentState={stateKey} />
 
-      {/* 2. Hero Section with YouTube Background Video (Reduced 20% Overlay) */}
+      {/* 2. Hero Section with Optimized Hero Banner & On-Demand Video */}
       <section className={styles.heroSection} aria-label={`BCTA ${stateName} Hero`}>
-        {/* Background YouTube Video Embed */}
+        {/* Background Hero Banner Image (LCP Optimized) & Video Container */}
         <div className={styles.videoBackgroundContainer} aria-hidden="true">
-          {isPlaying ? (
+          <Image
+            src="/images/hero-banner.webp"
+            alt="BCTA Construction Training Background"
+            fill
+            priority
+            fetchPriority="high"
+            quality={80}
+            sizes="100vw"
+            className={styles.fallbackPoster}
+          />
+          {isPlaying && (
             <iframe
               src="https://www.youtube-nocookie.com/embed/MNB4XUPyjWY?autoplay=1&mute=1&loop=1&playlist=MNB4XUPyjWY&controls=0&showinfo=0&rel=0&iv_load_policy=3&disablekb=1&modestbranding=1&playsinline=1&enablejsapi=1"
               title="Hero Background Video"
               className={styles.videoIframe}
               allow="autoplay; encrypted-media; picture-in-picture"
-            />
-          ) : (
-            <Image
-              src="/images/hero-banner.webp"
-              alt="BCTA Construction Training Background"
-              fill
-              priority
-              className={styles.fallbackPoster}
+              loading="lazy"
             />
           )}
         </div>
@@ -338,12 +346,14 @@ export default function RegionalStatePage({ stateKey }: RegionalStatePageProps) 
                   spotlightColor="rgba(255, 182, 5, 0.16)"
                 >
                   <div className={`${styles.cardImageContainer} ${styles.topCardHeight}`}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={course.image}
                       alt={course.title}
+                      width={580}
+                      height={340}
                       className={styles.cardTopImage}
-                      loading="eager"
+                      loading="lazy"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                     <div className={styles.imageGradientVignette} />
                     <span className={styles.floatingCodeBadge}>{course.code}</span>
@@ -379,6 +389,7 @@ export default function RegionalStatePage({ stateKey }: RegionalStatePageProps) 
                       <Link
                         href={`/courses/${course.id === 'cpc50220' && stateKey === 'wa' ? 'diploma-of-building-and-construction-western-australia' : course.slug}`}
                         className={styles.viewCourseBtn}
+                        aria-label={`View ${course.title} course details`}
                       >
                         <span>View Course</span>
                         <ArrowRight size={16} aria-hidden="true" />
@@ -398,12 +409,14 @@ export default function RegionalStatePage({ stateKey }: RegionalStatePageProps) 
                   spotlightColor="rgba(255, 182, 5, 0.16)"
                 >
                   <div className={`${styles.cardImageContainer} ${styles.bottomCardHeight}`}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={course.image}
                       alt={course.title}
+                      width={420}
+                      height={260}
                       className={styles.cardTopImage}
-                      loading="eager"
+                      loading="lazy"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                     <div className={styles.imageGradientVignette} />
                     <span className={styles.floatingCodeBadge}>{course.code}</span>
@@ -439,6 +452,7 @@ export default function RegionalStatePage({ stateKey }: RegionalStatePageProps) 
                       <Link
                         href={`/courses/${course.id === 'cpc50220' && stateKey === 'wa' ? 'diploma-of-building-and-construction-western-australia' : course.slug}`}
                         className={styles.viewCourseBtn}
+                        aria-label={`View ${course.title} course details`}
                       >
                         <span>View Course</span>
                         <ArrowRight size={16} aria-hidden="true" />
@@ -476,10 +490,12 @@ export default function RegionalStatePage({ stateKey }: RegionalStatePageProps) 
             {WHAT_YOU_LEARN.map((item, index) => (
               <div key={index} className={styles.learnCard}>
                 <div className={styles.learnIconWrapper}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={item.icon}
-                    alt={item.title}
+                    alt=""
+                    aria-hidden="true"
+                    width={48}
+                    height={48}
                     className={styles.learnIconImg}
                     loading="lazy"
                   />

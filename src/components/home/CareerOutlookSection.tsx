@@ -219,7 +219,7 @@ export default function CareerOutlookSection() {
           <div className={`${styles.metricsCol} ${isVisible ? styles.metricsVisible : ''}`}>
             <div className={styles.metricsGrid}>
               {METRICS.map((metric) => (
-                <div
+                <article
                   key={metric.id}
                   className={styles.metricCard}
                   aria-label={metric.screenReaderLabel}
@@ -250,7 +250,7 @@ export default function CareerOutlookSection() {
 
                   <h3 className={styles.metricLabel}>{metric.label}</h3>
                   <p className={styles.metricSubtext}>{metric.subtext}</p>
-                </div>
+                </article>
               ))}
             </div>
           </div>
